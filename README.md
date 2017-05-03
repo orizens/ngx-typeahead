@@ -34,7 +34,8 @@ npm install ngx-typeahead --save-dev
 * **typeaheadSelected**<_string_> - (**required**) - emits an event once the item is selected.  
 
 ## DEMO
-Soon...
+[Demo](https://plnkr.co/edit/gV6kMSRlogjBKnh3JHU3?p=preview)
+
 
 ## Usage
 First, import the **NgxTypeaheadModule** to your module:
