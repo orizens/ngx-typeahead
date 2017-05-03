@@ -170,6 +170,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     const searchConfig: URLSearchParams = new URLSearchParams();
     const searchParams = this.taParams;
     const params = Object.keys(searchParams);
+    params['q'] = query;
     if (params.length) {
       params.forEach((param: string) => searchConfig.set(param, searchParams[param]));
     }

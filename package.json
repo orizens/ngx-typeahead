@@ -1,6 +1,6 @@
 {
     "name": "ngx-typeahead",
-    "version": "0.0.1-0",
+    "version": "0.0.1-1",
     "description": "A simple buy yet powerful typeahead component for Angular",
     "main": "./bundles/ngx-typeahead.umd.js",
     "module": "./modules/ngx-typeahead.es5.js",
