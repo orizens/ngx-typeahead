@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpModule, JsonpModule } from '@angular/http';
 
 import { NgxTypeAheadComponent } from './ngx-typeahead.component';
 
 @NgModule({
-  declarations: [NgxTypeAheadComponent],
-  exports: [NgxTypeAheadComponent, CommonModule],
+  declarations: [ NgxTypeAheadComponent ],
+  exports: [
+    NgxTypeAheadComponent, CommonModule
+  ],
   imports: [
-    CommonModule
+    CommonModule, HttpModule, JsonpModule
   ],
   providers: [
   ]
