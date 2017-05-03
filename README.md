@@ -27,6 +27,7 @@ npm install ngx-typeahead --save-dev
 ### Inputs
 * **taUrl**<_string_> - (**required**) - the url of a remote server that supports jsonp calls.
 * **taParams**<_{ key: string, value: any}_> - (optional, default: **{}**) - a {key,value} (json) object to include as params for the json call. Each api supports different structure.   
+* **taQueryParam**<_query_> - (optional, default: 'q') - a string member which is set with the query value for search.   
 * **typeaheadItemTpl**<_TemplateRef_> - (optional) - a template reference to be used for each result item.  
 
 ### Outputs

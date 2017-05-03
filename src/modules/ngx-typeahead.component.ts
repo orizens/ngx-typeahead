@@ -67,7 +67,8 @@ import { Key } from '../models';
 export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   @Input() typeaheadItemTpl: TemplateRef<any>;
   @Input() taUrl: string = '';
-  @Input () taParams = {};
+  @Input() taParams = {};
+  @Input() taQueryParam = 'q';
 
   @Output() typeaheadSelected = new EventEmitter<string>();
 
@@ -170,10 +171,10 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     const searchConfig: URLSearchParams = new URLSearchParams();
     const searchParams = this.taParams;
     const params = Object.keys(searchParams);
-    params['q'] = query;
     if (params.length) {
       params.forEach((param: string) => searchConfig.set(param, searchParams[param]));
     }
+    searchConfig.set(this.taQueryParam, query);
     const options: RequestOptionsArgs = {
       search: searchConfig
     };
