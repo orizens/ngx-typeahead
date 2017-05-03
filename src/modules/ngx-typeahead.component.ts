@@ -20,6 +20,10 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/share';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/fromEvent';
 
 import { Key } from '../models';
 
@@ -33,6 +37,15 @@ import { Key } from '../models';
 */
 @Component({
   selector: '[ngxTypeahead]',
+  styles: [`
+  .typeahead-backdrop {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+  }
+  `],
   template: `
   <ng-template #suggestionsTplRef>
   <section class="list-group results" *ngIf="showSuggestions">
@@ -49,16 +62,7 @@ import { Key } from '../models';
     </button>
   </section>
   </ng-template>
-  `,
-  styles: [`
-  .typeahead-backdrop {
-    position: fixed;
-    bottom: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-  `]
+  `
 })
 export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   @Input() typeaheadItemTpl: TemplateRef<any>;
@@ -69,11 +73,19 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
 
   showSuggestions = false;
   results: string[];
+
+  @ViewChild('suggestionsTplRef') suggestionsTplRef;
+
   private suggestionIndex = 0;
   private subscriptions: Subscription[];
   private activeResult: string;
 
-  @ViewChild('suggestionsTplRef') suggestionsTplRef;
+  constructor(
+    private element: ElementRef,
+    private viewContainer: ViewContainerRef,
+    private jsonp: Jsonp,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   @HostListener('keydown', ['$event'])
   handleEsc(event: KeyboardEvent) {
@@ -82,12 +94,6 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       event.preventDefault();
     }
   }
-
-  constructor(private element: ElementRef,
-    private viewContainer: ViewContainerRef,
-    private jsonp: Jsonp,
-    private cdr: ChangeDetectorRef
-  ) { }
 
   ngOnInit() {
     const onkeyDown$ = this.onElementKeyDown();
@@ -100,7 +106,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
     this.subscriptions.length = 0;
   }
 
@@ -158,20 +164,21 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck();
       });
   }
+
   suggest(query: string) {
     const url = this.taUrl;
     const searchConfig: URLSearchParams = new URLSearchParams();
     const searchParams = this.taParams;
     const params = Object.keys(searchParams);
     if (params.length) {
-      params.forEach(param => searchConfig.set(param, searchParams[param]));
+      params.forEach((param: string) => searchConfig.set(param, searchParams[param]));
     }
     const options: RequestOptionsArgs = {
       search: searchConfig
     };
     return this.jsonp.get(url, options)
-      .map(response => response.json()[1])
-      .map(results => results.map(result => result[0]));
+      .map((response) => response.json()[1])
+      .map((results) => results.map((result: string) => result[0]));
   }
 
   markIsActive(index: number, result: string) {

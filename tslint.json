@@ -14,11 +14,16 @@
             "camelCase"
         ],
         "component-selector": [
-            true,
+            false,
             "element",
             [
                 "cmp-prefix1",
                 "cmp-prefix2"
+            ],
+            "attribute",
+            [
+                "dir-prefix1",
+                "dir-prefix2"
             ],
             "kebab-case"
         ],

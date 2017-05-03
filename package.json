@@ -1,6 +1,6 @@
 {
     "name": "ngx-typeahead",
-    "version": "0.0.1",
+    "version": "0.0.1-0",
     "description": "A simple buy yet powerful typeahead component for Angular",
     "main": "./bundles/ngx-typeahead.umd.js",
     "module": "./modules/ngx-typeahead.es5.js",
@@ -40,6 +40,7 @@
         "@angular/compiler": "^4.0.0",
         "@angular/compiler-cli": "^4.0.0",
         "@angular/core": "^4.0.0",
+        "@angular/http": "^4.0.0",
         "@angular/platform-browser": "^4.0.0",
         "@angular/platform-browser-dynamic": "^4.0.0",
         "@angular/platform-server": "^4.0.0",
