@@ -28,10 +28,11 @@ npm install ngx-typeahead --save-dev
 * **taUrl**<_string_> - (**required**) - the url of a remote server that supports jsonp calls.
 * **taParams**<_{ key: string, value: any}_> - (optional, default: **{}**) - a {key,value} (json) object to include as params for the json call. Each api supports different structure.   
 * **taQueryParam**<_query_> - (optional, default: 'q') - a string member which is set with the query value for search.   
-* **typeaheadItemTpl**<_TemplateRef_> - (optional) - a template reference to be used for each result item.  
+* **taCallbackParamValue**<_query_> - (optional, default: 'JSONP_CALLBACK') - a string value for the callback query parameter.   
+* **taItemTpl**<_TemplateRef_> - (optional) - a template reference to be used for each result item.  
 
 ### Outputs
-* **typeaheadSelected**<_string_> - (**required**) - emits an event once the item is selected.  
+* **taSelected**<_string_> - (**required**) - emits an event once the item is selected.  
 
 ## DEMO
 [Demo](https://plnkr.co/edit/gV6kMSRlogjBKnh3JHU3?p=preview)
@@ -65,10 +66,11 @@ import { Component } from '@angular/core';
   selector: 'app',
   template: `
     <div class="search-results">
-      <input ngxTypeahead
+      <input [value]="search"
+        ngxTypeahead
         [taUrl]="url"
         [taParams]="params"
-        (typeaheadSelected)="handleResultSelected($event)"
+        (taSelected)="handleResultSelected($event)"
       >
     </div>
   `
@@ -81,13 +83,11 @@ export class AppComponent {
     xhr: 't',
     client: 'youtube',
     q: query,
-    callback: 'JSONP_CALLBACK'
   };
-  public selectedResult = '';
+  public search = '';
 
   handleResultSelected (result) {
-    console.log('selected result:', result);
-    this.selectedResult = result;
+    this.search = result;
   }
 }
 ```

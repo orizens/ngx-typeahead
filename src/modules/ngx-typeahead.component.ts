@@ -54,9 +54,9 @@ import { Key } from '../models';
       *ngFor="let result of results; let i = index;"
       [class.active]="markIsActive(i, result)"
       (click)="handleSelectSuggestion(result)">
-      <span *ngIf="!typeaheadItemTpl"><i class="fa fa-search"></i> {{ result }}</span>
+      <span *ngIf="!taItemTpl"><i class="fa fa-search"></i> {{ result }}</span>
       <ng-template
-        [ngTemplateOutlet]="typeaheadItemTpl" 
+        [ngTemplateOutlet]="taItemTpl" 
         [ngOutletContext]="{ $implicit: {result: result, index: i} }"
       ></ng-template>
     </button>
@@ -65,12 +65,13 @@ import { Key } from '../models';
   `
 })
 export class NgxTypeAheadComponent implements OnInit, OnDestroy {
-  @Input() typeaheadItemTpl: TemplateRef<any>;
+  @Input() taItemTpl: TemplateRef<any>;
   @Input() taUrl: string = '';
   @Input() taParams = {};
   @Input() taQueryParam = 'q';
+  @Input() taCallbackParamValue = 'JSONP_CALLBACK';
 
-  @Output() typeaheadSelected = new EventEmitter<string>();
+  @Output() taSelected = new EventEmitter<string>();
 
   showSuggestions = false;
   results: string[];
@@ -169,12 +170,14 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   suggest(query: string) {
     const url = this.taUrl;
     const searchConfig: URLSearchParams = new URLSearchParams();
-    const searchParams = this.taParams;
+    const searchParams = Object.assign({}, {
+      callback: this.taCallbackParamValue,
+      [this.taQueryParam]: query
+    }, this.taParams);
     const params = Object.keys(searchParams);
     if (params.length) {
       params.forEach((param: string) => searchConfig.set(param, searchParams[param]));
     }
-    searchConfig.set(this.taQueryParam, query);
     const options: RequestOptionsArgs = {
       search: searchConfig
     };
@@ -192,7 +195,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   }
   handleSelectSuggestion(suggestion: string) {
     this.hideSuggestions();
-    this.typeaheadSelected.emit(suggestion);
+    this.taSelected.emit(suggestion);
   }
 
   validateKeyCode(event: KeyboardEvent) {
@@ -209,6 +212,6 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   }
 
   hasItemTemplate() {
-    return this.typeaheadItemTpl !== undefined;
+    return this.taItemTpl !== undefined;
   }
 }
