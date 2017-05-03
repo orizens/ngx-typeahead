@@ -35,7 +35,7 @@ npm install ngx-typeahead --save-dev
 * **taSelected**<_string_> - (**required**) - emits an event once the item is selected.  
 
 ## DEMO
-[Demo](https://plnkr.co/edit/gV6kMSRlogjBKnh3JHU3?p=preview)
+[Demo](http://plnkr.co/edit/gV6kMSRlogjBKnh3JHU3?p=preview)
 
 
 ## Usage
