@@ -60,33 +60,33 @@ Then, in app component:
 import { Component } from '@angular/core';
 
 @Component({
-	selector: 'app',
-	template: `
-		<div class="search-results">
-			<input ngxTypeahead
-				[taUrl]="url"
-				[taParams]="params"
-				(typeaheadSelected)="handleResultSelected($event)"
-			>
-		</div>
-	`
+  selector: 'app',
+  template: `
+    <div class="search-results">
+      <input ngxTypeahead
+        [taUrl]="url"
+        [taParams]="params"
+        (typeaheadSelected)="handleResultSelected($event)"
+      >
+    </div>
+  `
 })
 export class AppComponent {
-	public url = 'http://suggestqueries.google.com/complete/search';
-	public params = {
-		hl: 'en',
-		ds: 'yt',
-		xhr: 't',
-		client: 'youtube',
-		q: query,
-		callback: 'JSONP_CALLBACK'
-	};
-	public selectedResult = '';
+  public url = 'http://suggestqueries.google.com/complete/search';
+  public params = {
+    hl: 'en',
+    ds: 'yt',
+    xhr: 't',
+    client: 'youtube',
+    q: query,
+    callback: 'JSONP_CALLBACK'
+  };
+  public selectedResult = '';
 
-	handleResultSelected (result) {
-		console.log('selected result:', result);
-	  this.selectedResult = result;
-	}
+  handleResultSelected (result) {
+    console.log('selected result:', result);
+    this.selectedResult = result;
+  }
 }
 ```
 
