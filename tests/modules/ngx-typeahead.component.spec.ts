@@ -34,10 +34,10 @@ describe('A Typeahead component', () => {
     spyChangeDetectorRef = jasmine.createSpyObj('spyChangeDetectorRef', [ 'markForCheck' ]);
 
     // setting spy on methods
-    spyOn(NgxTypeAheadComponent.prototype, 'filterEnterEvent');
-    spyOn(NgxTypeAheadComponent.prototype, 'listenAndSuggest');
-    spyOn(NgxTypeAheadComponent.prototype, 'navigateWithArrows');
-    spyOn(NgxTypeAheadComponent.prototype, 'onElementKeyDown');
+    spyOn(NgxTypeAheadComponent.prototype, 'filterEnterEvent').and.callThrough();
+    spyOn(NgxTypeAheadComponent.prototype, 'listenAndSuggest').and.callThrough();
+    spyOn(NgxTypeAheadComponent.prototype, 'navigateWithArrows').and.callThrough();
+    spyOn(NgxTypeAheadComponent.prototype, 'onElementKeyDown').and.callThrough();
     spyOn(NgxTypeAheadComponent.prototype, 'renderTemplate');
 
     TestBed.configureTestingModule({
