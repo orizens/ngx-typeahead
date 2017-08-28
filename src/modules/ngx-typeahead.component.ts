@@ -1,5 +1,10 @@
-import { RequestOptionsArgs, Response } from '@angular/http';
-import { Jsonp, URLSearchParams, Http } from '@angular/http';
+import {
+  RequestOptionsArgs,
+  Response,
+  Jsonp,
+  URLSearchParams,
+  Http
+} from '@angular/http';
 import {
   ChangeDetectorRef,
   Component,
@@ -44,7 +49,8 @@ import {
 */
 @Component({
   selector: '[ngxTypeahead]',
-  styles: [`
+  styles: [
+    `
   .typeahead-backdrop {
     bottom: 0;
     left: 0;
@@ -52,7 +58,8 @@ import {
     right: 0;
     top: 0;
   }
-  `],
+  `
+  ],
   template: `
   <ng-template #suggestionsTplRef>
   <section class="list-group results" *ngIf="showSuggestions">
@@ -98,7 +105,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     private jsonp: Jsonp,
     private http: Http,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   @HostListener('keydown', ['$event'])
   handleEsc(event: KeyboardEvent) {
@@ -119,7 +126,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.subscriptions.forEach(sub => sub.unsubscribe());
     this.subscriptions.length = 0;
   }
 
@@ -155,7 +162,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
         this.showSuggestions = true;
         this.suggestionIndex = 0;
         this.cdr.markForCheck();
-    });
+      });
   }
 
   navigateWithArrows(elementObs: Observable<{}>) {
@@ -163,7 +170,10 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       .filter((e: any) => validateArrowKeys(e.keyCode))
       .map((e: any) => e.keyCode)
       .subscribe((keyCode: number) => {
-        this.suggestionIndex = resolveNextIndex(this.suggestionIndex, keyCode === Key.ArrowDown);
+        this.suggestionIndex = resolveNextIndex(
+          this.suggestionIndex,
+          keyCode === Key.ArrowDown
+        );
         this.showSuggestions = true;
         this.cdr.markForCheck();
       });
@@ -171,20 +181,27 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
 
   suggest(query: string) {
     const url = this.taUrl;
-    const searchConfig = createParamsForQuery(query, this.taCallbackParamValue, this.taQueryParam, this.taParams);
+    const searchConfig = createParamsForQuery(
+      query,
+      this.taCallbackParamValue,
+      this.taQueryParam,
+      this.taParams
+    );
     const options: RequestOptionsArgs = {
       search: searchConfig
     };
     const apiMethod = resolveApiMethod(this.taApiMethod);
     const isJsonpApi = this.taApi === 'jsonp';
-    const responseTransformMethod = this.taResponseTransform || ((item) => item);
+    const responseTransformMethod = this.taResponseTransform || (item => item);
     return isJsonpApi
-      ? this.jsonp[apiMethod](url, options)
-        .map((response: Response) => response.json()[1])
-        .map((results) => results.map((result: string) => result[0]))
-      : this.http[apiMethod](url, options)
-        .map((response: Response) => response.json())
-        .map((results: any[]) => results.map(responseTransformMethod));
+      ? this.jsonp
+          [apiMethod](url, options)
+          .map((response: Response) => response.json()[1])
+          .map(results => results.map((result: string) => result[0]))
+      : this.http
+          [apiMethod](url, options)
+          .map((response: Response) => response.json())
+          .map((results: any[]) => results.map(responseTransformMethod));
   }
 
   markIsActive(index: number, result: string) {

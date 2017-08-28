@@ -9,9 +9,9 @@ export function validateNonCharKeyCode(keyCode: number) {
     Key.ArrowLeft,
     Key.ArrowUp,
     Key.ArrowRight,
-    Key.ArrowDown,
-  ].every((codeKey) => codeKey !== keyCode);
-};
+    Key.ArrowDown
+  ].every(codeKey => codeKey !== keyCode);
+}
 
 export function validateArrowKeys(keyCode: number) {
   return keyCode === Key.ArrowDown || keyCode === Key.ArrowUp;
@@ -22,25 +22,32 @@ export function isIndexActive(index, currentIndex) {
 }
 
 export function createParamsForQuery(
-    query: string,
-    jsonpCallbackParamValue = 'JSONP_CALLBACK',
-    queryParamKey = 'q',
-    customParams = {}
-    ) {
+  query: string,
+  jsonpCallbackParamValue = 'JSONP_CALLBACK',
+  queryParamKey = 'q',
+  customParams = {}
+) {
   const searchConfig: URLSearchParams = new URLSearchParams();
-  const searchParams = Object.assign({}, {
+  const searchParams = {
     callback: jsonpCallbackParamValue,
-    [queryParamKey]: query
-  }, customParams);
-  const setParam = (param: string) => searchConfig.set(param, searchParams[param]);
+    [queryParamKey]: query,
+    ...customParams
+  };
+  const setParam = (param: string) =>
+    searchConfig.set(param, searchParams[param]);
   const params = Object.keys(searchParams).forEach(setParam);
   return searchConfig;
-};
+}
 
 export function resolveApiMethod(method = '') {
   const isMethodValid = [
-    'get', 'post', 'put', 'delete', 'patch', 'request'
-  ].some((methodName) => method === methodName);
+    'get',
+    'post',
+    'put',
+    'delete',
+    'patch',
+    'request'
+  ].some(methodName => method === methodName);
   const apiMethod = isMethodValid ? method : 'get';
   return apiMethod;
 }

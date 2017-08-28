@@ -17,7 +17,7 @@ import { Key } from '../../src/models';
 describe('A Typeahead component', () => {
   let component: NgxTypeAheadComponent;
   let fixture: ComponentFixture<NgxTypeAheadComponent>;
-  let de: DebugElement;
+  // let de: DebugElement;
   let spyElementRef;
   let spyViewContainerRef;
   let spyJsonp;
@@ -101,12 +101,12 @@ describe('A Typeahead component', () => {
     });
   });
 
-  describe('Functionality', () => {
+  describe('Functionality',      () => {
     it('should hide suggestion when ESC is pressed', () => {
-      let mockedEvent = <KeyboardEvent> {
+      const mockedEvent = {
         keyCode: Key.Escape,
         preventDefault: () => undefined,
-      };
+      } as KeyboardEvent;
       component.handleEsc(mockedEvent);
       const actual = component.showSuggestions;
       const expected = false;
