@@ -1,13 +1,14 @@
 {
     "name": "ngx-typeahead",
-    "version": "0.0.21",
-    "description": "A simple buy yet powerful typeahead component for Angular",
+    "version": "0.0.3",
+    "description": "A simple but yet powerful typeahead component for Angular",
     "main": "./bundles/ngx-typeahead.umd.js",
     "module": "./modules/ngx-typeahead.es5.js",
     "es2015": "./modules/ngx-typeahead.js",
     "scripts": {
         "build": "node build.js",
         "test": "karma start",
+        "test:watch": "karma start --single-run=false",
         "pack-lib": "npm pack ./dist",
         "publish-lib": "npm publish ./dist",
         "publish:beta": "npm publish --tag beta ./dist",
@@ -28,7 +29,9 @@
     "keywords": [
         "angular",
         "javascript",
-        "typescript"
+        "typescript",
+        "typeahead",
+        "ui component"
     ],
     "license": "MIT",
     "peerDependencies": {

@@ -1,5 +1,5 @@
-import { RequestOptionsArgs } from '@angular/http';
-import { Jsonp, URLSearchParams } from '@angular/http';
+import { RequestOptionsArgs, Response } from '@angular/http';
+import { Jsonp, URLSearchParams, Http } from '@angular/http';
 import {
   ChangeDetectorRef,
   Component,
@@ -26,7 +26,14 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/fromEvent';
 
 import { Key } from '../models';
-
+import {
+  validateNonCharKeyCode,
+  isIndexActive,
+  createParamsForQuery,
+  resolveApiMethod,
+  validateArrowKeys,
+  resolveNextIndex
+} from '../services/ngx-typeahead.utils';
 /*
  using an external template:
  <input [typeaheadTpl]="itemTpl" >
@@ -65,16 +72,19 @@ import { Key } from '../models';
   `
 })
 export class NgxTypeAheadComponent implements OnInit, OnDestroy {
+  showSuggestions = false;
+  results: string[];
+
   @Input() taItemTpl: TemplateRef<any>;
-  @Input() taUrl: string = '';
+  @Input() taUrl = '';
   @Input() taParams = {};
   @Input() taQueryParam = 'q';
   @Input() taCallbackParamValue = 'JSONP_CALLBACK';
+  @Input() taApi = 'jsonp';
+  @Input() taApiMethod = 'get';
+  @Input() taResponseTransform;
 
   @Output() taSelected = new EventEmitter<string>();
-
-  showSuggestions = false;
-  results: string[];
 
   @ViewChild('suggestionsTplRef') suggestionsTplRef;
 
@@ -86,6 +96,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     private element: ElementRef,
     private viewContainer: ViewContainerRef,
     private jsonp: Jsonp,
+    private http: Http,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -132,7 +143,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
 
   listenAndSuggest() {
     return Observable.fromEvent(this.element.nativeElement, 'keyup')
-      .filter(this.validateKeyCode)
+      .filter((e: any) => validateNonCharKeyCode(e.keyCode))
       .map((e: any) => e.target.value)
       .debounceTime(300)
       .concat()
@@ -149,19 +160,10 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
 
   navigateWithArrows(elementObs: Observable<{}>) {
     return elementObs
-      .filter((e: any) => e.keyCode === Key.ArrowDown || e.keyCode === Key.ArrowUp)
+      .filter((e: any) => validateArrowKeys(e.keyCode))
       .map((e: any) => e.keyCode)
       .subscribe((keyCode: number) => {
-        const step = keyCode === Key.ArrowDown ? 1 : -1;
-        const topLimit = 9;
-        const bottomLimit = 0;
-        this.suggestionIndex += step;
-        if (this.suggestionIndex === topLimit + 1) {
-          this.suggestionIndex = bottomLimit;
-        }
-        if (this.suggestionIndex === bottomLimit - 1) {
-          this.suggestionIndex = topLimit;
-        }
+        this.suggestionIndex = resolveNextIndex(this.suggestionIndex, keyCode === Key.ArrowDown);
         this.showSuggestions = true;
         this.cdr.markForCheck();
       });
@@ -169,42 +171,33 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
 
   suggest(query: string) {
     const url = this.taUrl;
-    const searchConfig: URLSearchParams = new URLSearchParams();
-    const searchParams = Object.assign({}, {
-      callback: this.taCallbackParamValue,
-      [this.taQueryParam]: query
-    }, this.taParams);
-    const params = Object.keys(searchParams);
-    if (params.length) {
-      params.forEach((param: string) => searchConfig.set(param, searchParams[param]));
-    }
+    const searchConfig = createParamsForQuery(query, this.taCallbackParamValue, this.taQueryParam, this.taParams);
     const options: RequestOptionsArgs = {
       search: searchConfig
     };
-    return this.jsonp.get(url, options)
-      .map((response) => response.json()[1])
-      .map((results) => results.map((result: string) => result[0]));
+    const apiMethod = resolveApiMethod(this.taApiMethod);
+    const isJsonpApi = this.taApi === 'jsonp';
+    const responseTransformMethod = this.taResponseTransform || ((item) => item);
+    return isJsonpApi
+      ? this.jsonp[apiMethod](url, options)
+        .map((response: Response) => response.json()[1])
+        .map((results) => results.map((result: string) => result[0]))
+      : this.http[apiMethod](url, options)
+        .map((response: Response) => response.json())
+        .map((results: any[]) => results.map(responseTransformMethod));
   }
 
   markIsActive(index: number, result: string) {
-    const isActive = index === this.suggestionIndex;
+    const isActive = isIndexActive(index, this.suggestionIndex);
     if (isActive) {
       this.activeResult = result;
     }
     return isActive;
   }
+
   handleSelectSuggestion(suggestion: string) {
     this.hideSuggestions();
     this.taSelected.emit(suggestion);
-  }
-
-  validateKeyCode(event: KeyboardEvent) {
-    return event.keyCode !== Key.Tab
-     && event.keyCode !== Key.Shift
-     && event.keyCode !== Key.ArrowLeft
-     && event.keyCode !== Key.ArrowUp
-     && event.keyCode !== Key.ArrowRight
-     && event.keyCode !== Key.ArrowDown;
   }
 
   hideSuggestions() {
