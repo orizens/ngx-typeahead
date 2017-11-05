@@ -71,7 +71,7 @@ import {
       <span *ngIf="!taItemTpl"><i class="fa fa-search"></i> {{ result }}</span>
       <ng-template
         [ngTemplateOutlet]="taItemTpl" 
-        [ngOutletContext]="{ $implicit: {result: result, index: i} }"
+        [ngTemplateOutletContext]="{ $implicit: {result: result, index: i} }"
       ></ng-template>
     </button>
   </section>
