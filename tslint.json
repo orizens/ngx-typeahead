@@ -1,16 +1,16 @@
 {
     "extends": [
-        "tslint:latest",
-        "tslint-config-prettier"
+        "tslint:latest"
     ],
     "plugins": [
-        "tslint-plugin-prettier"
+        // "tslint-plugin-prettier"
     ],
     "rulesDirectory": [
         "tslint-plugin-prettier",
         "node_modules/codelyzer"
     ],
     "rules": {
+        "arrow-parens": false,
         "directive-selector": [
             true,
             "attribute",
@@ -64,7 +64,15 @@
         "trailing-comma": [
             false
         ],
-        "member-access": [false, "check-accessor"],
-        "prettier": [true, { "singleQuote": true }]
+        "member-access": [
+            false,
+            "check-accessor"
+        ],
+        "prettier": [
+            true,
+            {
+                "singleQuote": true
+            }
+        ]
     }
 }

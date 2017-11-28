@@ -41,7 +41,7 @@ import {
 } from '../services/ngx-typeahead.utils';
 /*
  using an external template:
- <input [typeaheadTpl]="itemTpl" >
+ <input [taItemTpl]="itemTpl" >
 
   <ng-template #itemTpl let-result>
     <strong>MY {{ result.result }}</strong>
@@ -70,7 +70,7 @@ import {
       (click)="handleSelectSuggestion(result)">
       <span *ngIf="!taItemTpl"><i class="fa fa-search"></i> {{ result }}</span>
       <ng-template
-        [ngTemplateOutlet]="taItemTpl" 
+        [ngTemplateOutlet]="taItemTpl"
         [ngTemplateOutletContext]="{ $implicit: {result: result, index: i} }"
       ></ng-template>
     </button>
@@ -105,7 +105,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     private jsonp: Jsonp,
     private http: Http,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   @HostListener('keydown', ['$event'])
   handleEsc(event: KeyboardEvent) {
@@ -195,13 +195,13 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     const responseTransformMethod = this.taResponseTransform || (item => item);
     return isJsonpApi
       ? this.jsonp
-          [apiMethod](url, options)
-          .map((response: Response) => response.json()[1])
-          .map(results => results.map((result: string) => result[0]))
+      [apiMethod](url, options)
+        .map((response: Response) => response.json()[1])
+        .map(results => results.map((result: string) => result[0]))
       : this.http
-          [apiMethod](url, options)
-          .map((response: Response) => response.json())
-          .map((results: any[]) => results.map(responseTransformMethod));
+      [apiMethod](url, options)
+        .map((response: Response) => response.json())
+        .map((results: any[]) => results.map(responseTransformMethod));
   }
 
   markIsActive(index: number, result: string) {

@@ -5,14 +5,9 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { NgxTypeAheadComponent } from './ngx-typeahead.component';
 
 @NgModule({
-  declarations: [ NgxTypeAheadComponent ],
-  exports: [
-    NgxTypeAheadComponent, CommonModule
-  ],
-  imports: [
-    CommonModule, HttpModule, JsonpModule
-  ],
-  providers: [
-  ]
+  declarations: [NgxTypeAheadComponent],
+  exports: [NgxTypeAheadComponent, CommonModule],
+  imports: [CommonModule, HttpModule, JsonpModule],
+  providers: []
 })
-export class NgxTypeaheadModule { }
+export class NgxTypeaheadModule {}

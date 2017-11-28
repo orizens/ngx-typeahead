@@ -95,5 +95,43 @@ export class AppComponent {
 }
 ```
 
+## Custom Template For Item    
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app',
+  template: `
+    <div class="search-results">
+      <input [value]="search"
+        ngxTypeahead
+        [taUrl]="url"
+        [taParams]="params"
+        [taItemTpl]="itemTpl"
+        (taSelected)="handleResultSelected($event)"
+      >
+      <ng-template #itemTpl let-result>
+        <strong>MY {{ result.result }}</strong>
+      </ng-template>
+    </div>
+  `
+})
+export class AppComponent {
+  public url = 'http://suggestqueries.google.com/complete/search';
+  public params = {
+    hl: 'en',
+    ds: 'yt',
+    xhr: 't',
+    client: 'youtube',
+    q: query,
+  };
+  public search = '';
+
+  handleResultSelected (result) {
+    this.search = result;
+  }
+}
+```
+
 # Showcase Examples
 * [Echoes Player - Developed with Angular, angular-cli and ngrx](http://orizens.github.io/echoes-player) ([github repo for echoes player](http://github.com/orizens/echoes-player))
