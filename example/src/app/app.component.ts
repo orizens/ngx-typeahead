@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SumService } from 'ngx-tester';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +19,19 @@ export class AppComponent {
 
   public query2 = '';
   public url2 = 'mocks/data.json';
-  constructor(private sum: SumService) {
+
+  public query3 = '';
+  public staticList = [
+    'guitar',
+    'drums',
+    'bass',
+    'keyboards',
+    'mic',
+    'trumpet',
+    'horns',
+    'pedals'
+  ];
+  constructor() {
     // this.sum.ask().subscribe(result => {
     //   this.result$ = result;
     // });
@@ -33,8 +44,13 @@ export class AppComponent {
     this.search = result;
   }
 
-  handleResult2Selected(result) {
+  public handleResult2Selected(result) {
     console.log(result);
     this.query2 = result;
+  }
+
+  public handleStaticResultSelected(result) {
+    console.log(result);
+    this.query3 = result;
   }
 }

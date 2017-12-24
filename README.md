@@ -1,9 +1,13 @@
 [![Build Status](https://travis-ci.org/orizens/ngx-typeahead.svg?branch=master)](https://travis-ci.org/orizens/ngx-typeahead)
 
 # Angular Typeahead Component
-This is an extract of the typeahead component from the open source [Echoes Player](http://github.com/orizens/echoes-player).  
-Its built with **JSONP** support by default.  
-Additional remote sources are soon to come.  
+This is an extract of the typeahead component from the [open source](http://github.com/orizens/echoes-player) [Echoes Player](http://echoesplayer.com).  
+
+## Data Sources Support
+Its built with **JSONP** support **by default**.  
+Supports **HTTP** remote source with any http method (get, post etc..). 
+Supports static list (in array form). 
+
 
 ## Angular Support
 For **Angular 4.3** (With the new **HttpClient**)- please use version 0.4  
@@ -30,11 +34,12 @@ npm install ngx-typeahead --save-dev
 * **taUrl**<_string_> - (**required**) - the url of a remote server that supports jsonp calls.
 * **taParams**<_{ key: string, value: any}_> - (optional, default: **{}**) - a {key,value} (json) object to include as params for the json call. Each api supports different structure.   
 * **taQueryParam**<_query_> - (optional, default: 'q') - a string member which is set with the query value for search.   
-* **taCallbackParamValue**<_query_> - (optional, default: 'JSONP_CALLBACK') - a string value for the callback query parameter.   
+* **taCallbackParamValue**<_query_> - (optional, NO Default) - a string value for the callback query parameter.   
 * **taItemTpl**<_TemplateRef_> - (optional) - a template reference to be used for each result item.  
 * **taApi**<_string_> - (optional, default: 'jsonp') - the utility to make a request with - 'jsonp', 'http'.  
 * **taApiMethod**<_string_> - (optional, default: 'get') - the method to be used in either 'jsonp' or 'http'.  
 * **taResponseTransform**<_Function_> - (optional) - a transformation function which is applied to an http request's "results" array (expected).  
+* **taList**<_any[]_> - (optional) - provide a static list of items to display. This prevents any remote request and has first precedence. 
 
 ### Outputs
 * **taSelected**<_string_> - (**required**) - emits an event once the item is selected.  

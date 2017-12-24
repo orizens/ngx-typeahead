@@ -31,9 +31,16 @@
   </li>
 </ul>
 
-<h1>example using HTTP</h1>
+<h1>Using HTTP</h1>
 <section class="col-sm-12 custom">
   <div class="search-results style-3">
-    <input type="text" [value]="query2" ngxTypeahead [taUrl]="url2" [taParams]="{}" [taApi]="http" (taSelected)="handleResult2Selected($event)">
+    <input type="text" [value]="query2" ngxTypeahead [taUrl]="url2" [taParams]="{}" [taApi]="'http'" (taSelected)="handleResult2Selected($event)">
+  </div>
+</section>
+
+<h1>Using STATIC list</h1>
+<section class="col-sm-12">
+  <div class="search-results style-3">
+    <input type="text" ngxTypeahead [value]="query3" [taList]="staticList" (taSelected)="handleStaticResultSelected($event)">
   </div>
 </section>

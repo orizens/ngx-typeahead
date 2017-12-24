@@ -1,6 +1,8 @@
-## v 0.0.5 (2017/12/24)
+## v 0.1.0 (2017/12/24)
 * [UPGRADE] - now using Angular 5 
+* [NEW] - now supports static list via 'taList' attribute. 
 * [CHANGE] - result container now is with 'position: absolute' by default 
+* [FIXED] - list items are now above the blocking container (z-index: 10) 
 
 ## v 0.0.4 (2017/11/05)
 * Replaced deprecated ngOutletContext by ngTemplateOutletContext to support Angular version 5.

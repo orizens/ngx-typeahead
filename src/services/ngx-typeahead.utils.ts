@@ -26,12 +26,10 @@ export function isIndexActive(index: number, currentIndex: number) {
 
 export function createParamsForQuery(
   query: string,
-  jsonpCallbackParamValue = 'JSONP_CALLBACK',
   queryParamKey = 'q',
   customParams = {}
 ) {
   const searchParams = {
-    callback: jsonpCallbackParamValue,
     [queryParamKey]: query,
     ...customParams
   };

@@ -25,6 +25,7 @@ import {
   validateArrowKeys,
   resolveNextIndex
 } from '../services/ngx-typeahead.utils';
+import { Subject } from 'rxjs/Subject';
 /*
  using an external template:
  <input [taItemTpl]="itemTpl" >
@@ -80,10 +81,11 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   @Input() taUrl = '';
   @Input() taParams = {};
   @Input() taQueryParam = 'q';
-  @Input() taCallbackParamValue = 'JSONP_CALLBACK';
+  @Input() taCallbackParamValue;
   @Input() taApi = 'jsonp';
   @Input() taApiMethod = 'get';
   @Input() taResponseTransform: () => void;
+  @Input() taList = [];
 
   @Output() taSelected = new EventEmitter<string>();
 
@@ -173,10 +175,19 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   }
 
   suggest(query: string) {
+    return this.taList.length
+      ? this.createListSource(this.taList)
+      : this.request(query);
+  }
+
+  /**
+   * peforms a jsonp/http request to search with query and params
+   * @param query the query to search from the remote source
+   */
+  request(query: string) {
     const url = this.taUrl;
     const searchConfig = createParamsForQuery(
       query,
-      this.taCallbackParamValue,
       this.taQueryParam,
       this.taParams
     );
@@ -185,7 +196,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     };
     const isJsonpApi = this.taApi === 'jsonp';
     return isJsonpApi
-      ? this.requestJsonp(url, options)
+      ? this.requestJsonp(url, options, this.taCallbackParamValue)
       : this.requestHttp(url, options);
   }
 
@@ -196,9 +207,9 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       .map((results: any[]) => results.map(responseTransformMethod));
   }
 
-  requestJsonp(url, options) {
+  requestJsonp(url, options, callback = 'callback') {
     const params = options.params.toString();
-    return this.http.jsonp(`${url}?${params}`, 'callback')
+    return this.http.jsonp(`${url}?${params}`, callback)
       .map((response: Response) => response[1])
       .map((results: any[]) => results.map((result: string) => result[0]));
   }
@@ -222,5 +233,11 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
 
   hasItemTemplate() {
     return this.taItemTpl !== undefined;
+  }
+
+  createListSource(list: any[]): Observable<string[]> {
+    return new Observable((observer) => {
+      observer.next(list);
+    });
   }
 }
