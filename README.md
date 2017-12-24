@@ -33,7 +33,7 @@ npm install ngx-typeahead --save-dev
 * **taCallbackParamValue**<_query_> - (optional, default: 'JSONP_CALLBACK') - a string value for the callback query parameter.   
 * **taItemTpl**<_TemplateRef_> - (optional) - a template reference to be used for each result item.  
 * **taApi**<_string_> - (optional, default: 'jsonp') - the utility to make a request with - 'jsonp', 'http'.  
-* **toApiMethod**<_string_> - (optional, default: 'get') - the method to be used in either 'jsonp' or 'http'.  
+* **taApiMethod**<_string_> - (optional, default: 'get') - the method to be used in either 'jsonp' or 'http'.  
 * **taResponseTransform**<_Function_> - (optional) - a transformation function which is applied to an http request's "results" array (expected).  
 
 ### Outputs
