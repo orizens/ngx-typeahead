@@ -1,4 +1,4 @@
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Key } from '../models';
 
 export function validateNonCharKeyCode(keyCode: number) {
@@ -9,7 +9,10 @@ export function validateNonCharKeyCode(keyCode: number) {
     Key.ArrowLeft,
     Key.ArrowUp,
     Key.ArrowRight,
-    Key.ArrowDown
+    Key.ArrowDown,
+    Key.MacCommandLeft,
+    Key.MacCommandRight,
+    Key.MacCommandFirefox
   ].every(codeKey => codeKey !== keyCode);
 }
 
@@ -17,7 +20,7 @@ export function validateArrowKeys(keyCode: number) {
   return keyCode === Key.ArrowDown || keyCode === Key.ArrowUp;
 }
 
-export function isIndexActive(index, currentIndex) {
+export function isIndexActive(index: number, currentIndex: number) {
   return index === currentIndex;
 }
 
@@ -27,16 +30,15 @@ export function createParamsForQuery(
   queryParamKey = 'q',
   customParams = {}
 ) {
-  const searchConfig: URLSearchParams = new URLSearchParams();
   const searchParams = {
     callback: jsonpCallbackParamValue,
     [queryParamKey]: query,
     ...customParams
   };
-  const setParam = (param: string) =>
-    searchConfig.set(param, searchParams[param]);
-  const params = Object.keys(searchParams).forEach(setParam);
-  return searchConfig;
+  // tslint:disable-next-line
+  const setParam = (acc: HttpParams, param: string) => acc.set(param, searchParams[param]);
+  const params = Object.keys(searchParams).reduce(setParam, new HttpParams());
+  return params;
 }
 
 export function resolveApiMethod(method = '') {

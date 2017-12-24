@@ -1,3 +1,7 @@
+## v 0.0.5 (2017/12/24)
+* [UPGRADE] - now using Angular 5 
+* [CHANGE] - result container now is with 'position: absolute' by default 
+
 ## v 0.0.4 (2017/11/05)
 * Replaced deprecated ngOutletContext by ngTemplateOutletContext to support Angular version 5.
 * Added taItemTpl example to Readme

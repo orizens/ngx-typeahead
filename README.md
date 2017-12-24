@@ -6,7 +6,9 @@ Its built with **JSONP** support by default.
 Additional remote sources are soon to come.  
 
 ## Angular Support
-Supports Angular **> 4**  
+For **Angular 4.3** (With the new **HttpClient**)- please use version 0.4  
+For **Angular 2, 4** (Without **HttpClient**)- please use version 0.3    
+
 AOT compatible  
 
 ## Angular Consulting Services

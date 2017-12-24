@@ -1,10 +1,4 @@
-import {
-  RequestOptionsArgs,
-  Response,
-  Jsonp,
-  URLSearchParams,
-  Http
-} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectorRef,
   Component,
@@ -21,14 +15,6 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/concat';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/fromEvent';
 
 import { Key } from '../models';
 import {
@@ -51,12 +37,20 @@ import {
   selector: '[ngxTypeahead]',
   styles: [
     `
+  .results {
+    position: absolute;
+  }
   .typeahead-backdrop {
     bottom: 0;
     left: 0;
     position: fixed;
     right: 0;
     top: 0;
+    z-index: 1;
+  }
+  .list-group-item {
+    position: relative;
+    z-index: 2;
   }
   `
   ],
@@ -89,11 +83,11 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   @Input() taCallbackParamValue = 'JSONP_CALLBACK';
   @Input() taApi = 'jsonp';
   @Input() taApiMethod = 'get';
-  @Input() taResponseTransform;
+  @Input() taResponseTransform: () => void;
 
   @Output() taSelected = new EventEmitter<string>();
 
-  @ViewChild('suggestionsTplRef') suggestionsTplRef;
+  @ViewChild('suggestionsTplRef') suggestionsTplRef: TemplateRef<any>;
 
   private suggestionIndex = 0;
   private subscriptions: Subscription[];
@@ -102,8 +96,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   constructor(
     private element: ElementRef,
     private viewContainer: ViewContainerRef,
-    private jsonp: Jsonp,
-    private http: Http,
+    private http: HttpClient,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -187,21 +180,27 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       this.taQueryParam,
       this.taParams
     );
-    const options: RequestOptionsArgs = {
-      search: searchConfig
+    const options = {
+      params: searchConfig
     };
-    const apiMethod = resolveApiMethod(this.taApiMethod);
     const isJsonpApi = this.taApi === 'jsonp';
-    const responseTransformMethod = this.taResponseTransform || (item => item);
     return isJsonpApi
-      ? this.jsonp
-      [apiMethod](url, options)
-        .map((response: Response) => response.json()[1])
-        .map(results => results.map((result: string) => result[0]))
-      : this.http
-      [apiMethod](url, options)
-        .map((response: Response) => response.json())
-        .map((results: any[]) => results.map(responseTransformMethod));
+      ? this.requestJsonp(url, options)
+      : this.requestHttp(url, options);
+  }
+
+  requestHttp(url: string, options) {
+    const apiMethod = resolveApiMethod(this.taApiMethod);
+    const responseTransformMethod = this.taResponseTransform || ((item: {}) => item);
+    return this.http[apiMethod](url, options)
+      .map((results: any[]) => results.map(responseTransformMethod));
+  }
+
+  requestJsonp(url, options) {
+    const params = options.params.toString();
+    return this.http.jsonp(`${url}?${params}`, 'callback')
+      .map((response: Response) => response[1])
+      .map((results: any[]) => results.map((result: string) => result[0]));
   }
 
   markIsActive(index: number, result: string) {

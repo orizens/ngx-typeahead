@@ -1,16 +1,17 @@
 {
-    "extends": [
-        "tslint:latest"
-    ],
-    "plugins": [
-        // "tslint-plugin-prettier"
-    ],
+    "extends": "tslint:recommended",
     "rulesDirectory": [
-        "tslint-plugin-prettier",
         "node_modules/codelyzer"
     ],
     "rules": {
         "arrow-parens": false,
+        "angular-whitespace": [
+            true,
+            "check-interpolation",
+            "check-pipe"
+        ],
+        "banana-in-box": true,
+        "templates-no-negated-async": true,
         "directive-selector": [
             true,
             "attribute",
@@ -27,11 +28,6 @@
                 "cmp-prefix1",
                 "cmp-prefix2"
             ],
-            "attribute",
-            [
-                "dir-prefix1",
-                "dir-prefix2"
-            ],
             "kebab-case"
         ],
         "use-input-property-decorator": true,
@@ -42,19 +38,22 @@
         "no-input-rename": true,
         "no-output-rename": true,
         "no-forward-ref": true,
+        "use-view-encapsulation": false,
         "use-life-cycle-interface": true,
         "use-pipe-transform-interface": true,
+        "pipe-naming": [
+            true,
+            "camelCase",
+            "Pipe"
+        ],
         "component-class-suffix": [
             true,
             "Component"
         ],
         "directive-class-suffix": [
-            true,
+            false,
             "Directive"
         ],
-        "templates-use-public": true,
-        "no-access-missing-member": true,
-        "invoke-injectable": true,
         "ordered-imports": [
             false
         ],
@@ -67,12 +66,6 @@
         "member-access": [
             false,
             "check-accessor"
-        ],
-        "prettier": [
-            true,
-            {
-                "singleQuote": true
-            }
         ]
     }
 }

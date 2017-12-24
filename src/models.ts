@@ -7,5 +7,9 @@ export enum Key {
   ArrowLeft = 37,
   ArrowRight = 39,
   ArrowUp = 38,
-  ArrowDown = 40
+  ArrowDown = 40,
+  // http://unixpapa.com/js/key.html
+  MacCommandLeft = 91,
+  MacCommandRight = 93,
+  MacCommandFirefox = 224
 }

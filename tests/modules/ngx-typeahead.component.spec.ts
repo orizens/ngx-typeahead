@@ -3,7 +3,7 @@ import {
   ComponentFixture,
   inject
 } from '@angular/core/testing';
-import { HttpModule, Jsonp, Http } from '@angular/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {
   ChangeDetectorRef,
   ElementRef,
@@ -20,7 +20,6 @@ describe('A Typeahead component', () => {
   // let de: DebugElement;
   let spyElementRef;
   let spyViewContainerRef;
-  let spyJsonp;
   let spyHttp;
   let spyChangeDetectorRef;
 
@@ -28,10 +27,9 @@ describe('A Typeahead component', () => {
   beforeEach(() => {
     // setting mocked providers
     spyElementRef = jasmine.createSpyObj('spyElementRef', ['nativeElement']);
-    spyViewContainerRef = jasmine.createSpyObj('spyViewContainerRef', [ 'createEmbeddedView']);
-    spyJsonp = jasmine.createSpyObj('spyJsonp', ['get']);
+    spyViewContainerRef = jasmine.createSpyObj('spyViewContainerRef', ['createEmbeddedView']);
     spyHttp = jasmine.createSpyObj('spyHttp', ['get']);
-    spyChangeDetectorRef = jasmine.createSpyObj('spyChangeDetectorRef', [ 'markForCheck' ]);
+    spyChangeDetectorRef = jasmine.createSpyObj('spyChangeDetectorRef', ['markForCheck']);
 
     // setting spy on methods
     spyOn(NgxTypeAheadComponent.prototype, 'filterEnterEvent').and.callThrough();
@@ -41,13 +39,12 @@ describe('A Typeahead component', () => {
     spyOn(NgxTypeAheadComponent.prototype, 'renderTemplate');
 
     TestBed.configureTestingModule({
-      declarations: [ NgxTypeAheadComponent ],
-      imports: [ HttpModule ],
+      declarations: [NgxTypeAheadComponent],
+      imports: [HttpClientModule],
       providers: [
         { provide: ElementRef, useValue: spyElementRef },
         { provide: ViewContainerRef, useValue: spyViewContainerRef },
-        { provide: Jsonp, useValue: spyJsonp },
-        { provide: Http, useValue: spyHttp },
+        { provide: HttpClient, useValue: spyHttp },
         { provide: ChangeDetectorRef, useValue: spyChangeDetectorRef },
       ]
     });
@@ -101,7 +98,7 @@ describe('A Typeahead component', () => {
     });
   });
 
-  describe('Functionality',      () => {
+  describe('Functionality', () => {
     it('should hide suggestion when ESC is pressed', () => {
       const mockedEvent = {
         keyCode: Key.Escape,
