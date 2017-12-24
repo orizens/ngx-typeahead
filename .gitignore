@@ -54,6 +54,7 @@ $ cat .gitignore
 /node_modules
 /dist
 /documentation
-
+example/node_modules
+example/package-lock.json
 *.log
 *.tgz
