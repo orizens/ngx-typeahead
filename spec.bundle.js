@@ -20,10 +20,12 @@ getTestBed().initTestEnvironment(
     platformBrowserDynamicTesting()
 );
 
-const testContext = require.context('./tests', true, /\.spec\.ts/);
+const testContext = require.context('./tests/services', true, /\.spec\.ts/);
+const testModulesContext = require.context('./tests/modules', true, /\.spec\.ts/);
 
 function requireAll(requireContext) {
     return requireContext.keys().map(requireContext);
 }
 
-const modules = requireAll(testContext);
+const testServices = requireAll(testContext);
+const testModules = requireAll(testModulesContext);

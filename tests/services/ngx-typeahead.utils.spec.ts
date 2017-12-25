@@ -32,7 +32,6 @@ describe('TypeAhead Utils', () => {
 
     function createParams(params = {}) {
       return typeaheadUtils.createParamsForQuery(query,
-        callbackType,
         queryParamKey,
         params);
     }
@@ -47,10 +46,6 @@ describe('TypeAhead Utils', () => {
 
     it('should create a params object for a query', () => {
       expect(actual.get('q')).toMatch(query);
-    });
-
-    it('should set a callback param value', () => {
-      expect(actual.get('callback')).toMatch(callbackType);
     });
 
     it('should set custom params', () => {

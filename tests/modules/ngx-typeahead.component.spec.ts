@@ -63,8 +63,8 @@ describe('A Typeahead component', () => {
       expect(component.taQueryParam).toBe('q');
     });
 
-    it('should have a default taCallbackParamValue', () => {
-      expect(component.taCallbackParamValue).toBe('JSONP_CALLBACK');
+    it('should have a default undefined taCallbackParamValue', () => {
+      expect(component.taCallbackParamValue).toBeUndefined();
     });
 
     it('should have a default taApi', () => {
