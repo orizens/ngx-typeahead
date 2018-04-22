@@ -167,6 +167,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       )
       .subscribe((results: string[]) => {
         this.results = results;
+        this.suggestionIndex = -1;
         this.displaySuggestions(Key.ArrowDown);
       });
   }

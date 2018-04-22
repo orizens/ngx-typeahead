@@ -1,3 +1,7 @@
+## v 0.2.1 (2018/04/21)
+
+* [FIX] - active item not updated correctly
+
 ## v 0.2.0 (2018/04/21)
 
 * [UPGRADE] - using rxjs new lettable operators ( > 5.5 )

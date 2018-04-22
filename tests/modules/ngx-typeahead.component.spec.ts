@@ -9,6 +9,7 @@ import {
 import { NgxTypeAheadComponent } from "../../src/modules/ngx-typeahead.component";
 import { NgxTypeaheadModule } from "../../src/modules/ngx-typeahead.module";
 import { Key } from "../../src/models";
+import { Subject } from "rxjs/Subject";
 
 describe("A Typeahead component", () => {
   let component: NgxTypeAheadComponent;
@@ -175,6 +176,35 @@ describe("A Typeahead component", () => {
       } as KeyboardEvent;
       component.handleEsc(event);
       expect(component.handleSelectSuggestion).not.toHaveBeenCalled();
+    });
+
+    [
+      {
+        title: "should set suggestion index to start",
+        index: 0,
+        expected: true
+      },
+      {
+        title: "should NOT set suggestion index to start",
+        index: 3,
+        expected: false
+      }
+    ].forEach(({ title, index, expected }: any) => {
+      it(title, () => {
+        const demo$ = new Subject<any>();
+        component.taList = [
+          "guitar",
+          "drums",
+          "bass",
+          "electric guitars",
+          "keyboards",
+          "mic"
+        ];
+        component.listenAndSuggest(demo$);
+        demo$.next({ target: { value: "testing" } });
+        const actual = component.markIsActive(index, "testing");
+        expect(actual).toBe(expected);
+      });
     });
   });
 });
