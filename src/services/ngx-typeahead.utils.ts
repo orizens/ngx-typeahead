@@ -1,5 +1,5 @@
-import { HttpParams } from '@angular/common/http';
-import { Key } from '../models';
+import { HttpParams } from "@angular/common/http";
+import { Key } from "../models";
 
 export function validateNonCharKeyCode(keyCode: number) {
   return [
@@ -24,9 +24,17 @@ export function isIndexActive(index: number, currentIndex: number) {
   return index === currentIndex;
 }
 
+export function isEnterKey(event: KeyboardEvent) {
+  return event.keyCode === Key.Enter;
+}
+
+export function isEscapeKey(event: KeyboardEvent) {
+  return event.keyCode === Key.Escape;
+}
+
 export function createParamsForQuery(
   query: string,
-  queryParamKey = 'q',
+  queryParamKey = "q",
   customParams = {}
 ) {
   const searchParams = {
@@ -34,27 +42,32 @@ export function createParamsForQuery(
     ...customParams
   };
   // tslint:disable-next-line
-  const setParam = (acc: HttpParams, param: string) => acc.set(param, searchParams[param]);
+  const setParam = (acc: HttpParams, param: string) =>
+    acc.set(param, searchParams[param]);
   const params = Object.keys(searchParams).reduce(setParam, new HttpParams());
   return params;
 }
 
-export function resolveApiMethod(method = '') {
+export function resolveApiMethod(method = "") {
   const isMethodValid = [
-    'get',
-    'post',
-    'put',
-    'delete',
-    'patch',
-    'request'
+    "get",
+    "post",
+    "put",
+    "delete",
+    "patch",
+    "request"
   ].some(methodName => method === methodName);
-  const apiMethod = isMethodValid ? method : 'get';
+  const apiMethod = isMethodValid ? method : "get";
   return apiMethod;
 }
 
-export function resolveNextIndex(currentIndex: number, stepUp: boolean) {
+export function resolveNextIndex(
+  currentIndex: number,
+  stepUp: boolean,
+  listLength = 10
+) {
   const step = stepUp ? 1 : -1;
-  const topLimit = 9;
+  const topLimit = listLength - 1;
   const bottomLimit = 0;
   const currentResultIndex = currentIndex + step;
   let resultIndex = currentResultIndex;
@@ -65,4 +78,20 @@ export function resolveNextIndex(currentIndex: number, stepUp: boolean) {
     resultIndex = topLimit;
   }
   return resultIndex;
+}
+
+export function toJsonpSingleResult(response: Response) {
+  return response[1];
+}
+
+export function toJsonpFinalResults(results: any[]) {
+  return results.map((result: any) => result[0]);
+}
+
+export function hasCharacters(query: string) {
+  return query.length > 0;
+}
+
+export function toFormControlValue(e: any) {
+  return e.target.value;
 }
