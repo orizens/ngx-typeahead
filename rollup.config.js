@@ -1,9 +1,9 @@
-import resolve from 'rollup-plugin-node-resolve';
-import sourcemaps from 'rollup-plugin-sourcemaps';
+import resolve from "rollup-plugin-node-resolve";
+import sourcemaps from "rollup-plugin-sourcemaps";
 
 /**
  * Add here external dependencies that actually you use.
- * 
+ *
  * About RxJS
  * Each RxJS functionality that you use in the library must be added as external dependency.
  * - For main classes use 'Rx':
@@ -19,32 +19,29 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
  */
 
 const globals = {
-    '@angular/core': 'ng.core',
-    '@angular/common': 'ng.common',
-    '@angular/common/http': 'ng.commmon.http',
-    'rxjs/Observable': 'Rx',
-    'rxjs/Observer': 'Rx',
-    // Rxjs dependencies
-    'rxjs/add/operator/debounceTime': 'Rx.Observable.prototype',
-    'rxjs/add/operator/concat': 'Rx.Observable.prototype',
-    'rxjs/add/operator/distinctUntilChanged': 'Rx.Observable.prototype',
-    'rxjs/add/operator/share': 'Rx.Observable.prototype',
-    'rxjs/add/operator/filter': 'Rx.Observable.prototype',
-    'rxjs/add/operator/map': 'Rx.Observable.prototype',
-    'rxjs/add/operator/switchMap': 'Rx.Observable.prototype',
-
-    'rxjs/add/observable/fromEvent': 'Rx.Observable.prototype'
+  "@angular/core": "ng.core",
+  "@angular/common": "ng.common",
+  "@angular/common/http": "ng.commmon.http",
+  "rxjs/Observable": "Rx",
+  "rxjs/Observer": "Rx",
+  "rxjs/Subject": "Rx",
+  // Rxjs dependencies
+  "rxjs/operators": "Rx.Observable.prototype",
+  "rxjs/observable/fromEvent": "Rx.Observable.prototype",
+  "rxjs/observable/of": "Rx.Observable.prototype"
 };
 
 export default {
-    external: Object.keys(globals),
-    plugins: [resolve(), sourcemaps()],
-    onwarn: () => { return },
-    output: {
-        format: 'umd',
-        name: 'ng.ngxTypeahead',
-        globals: globals,
-        sourcemap: true,
-        exports: 'named'
-    }
-}
+  external: Object.keys(globals),
+  plugins: [resolve(), sourcemaps()],
+  onwarn: () => {
+    return;
+  },
+  output: {
+    format: "umd",
+    name: "ng.ngxTypeahead",
+    globals: globals,
+    sourcemap: true,
+    exports: "named"
+  }
+};

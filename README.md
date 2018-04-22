@@ -40,19 +40,23 @@ npm install ngx-typeahead --save-dev
 
 ### Inputs
 
-* **taUrl**<_string_> - (**required**) - the url of a remote server that supports jsonp calls.
-* **taParams**<_{ key: string, value: any}_> - (optional, default: **{}**) - a {key,value} (json) object to include as params for the json call. Each api supports different structure.
-* **taQueryParam**<_query_> - (optional, default: 'q') - a string member which is set with the query value for search.
-* **taCallbackParamValue**<_query_> - (optional, NO Default) - a string value for the callback query parameter.
-* **taItemTpl**<_TemplateRef_> - (optional) - a template reference to be used for each result item.
-* **taApi**<_string_> - (optional, default: 'jsonp') - the utility to make a request with - 'jsonp', 'http'.
-* **taApiMethod**<_string_> - (optional, default: 'get') - the method to be used in either 'jsonp' or 'http'.
-* **taResponseTransform**<_Function_> - (optional) - a transformation function which is applied to an http request's "results" array (expected).
-* **taList**<_any[]_> - (optional) - provide a static list of items to display. This prevents any remote request and has first precedence.
+| Input                | Type                       | Required                   | Description                                                                                                |
+| -------------------- | -------------------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| taUrl                | string                     | YES                        | the url of a remote server that supports jsonp calls.                                                      |
+| taParams             | { key: string, value: any} | optional, default: {}      | a {key,value} (json) object to include as params for the json call. Each api supports different structure. |
+| taQueryParam         | query                      | optional, default: 'q'     | a string member which is set with the query value for search.                                              |
+| taCallbackParamValue | query                      | optional, NO Default       | a string value for the callback query parameter.                                                           |
+| taItemTpl            | TemplateRef                | - optional                 | a template reference to be used for each result item.                                                      |
+| taApi                | string                     | optional, default: 'jsonp' | the utility to make a request with - 'jsonp', 'http'.                                                      |
+| taApiMethod          | string                     | optional, default: 'get'   | the method to be used in either 'jsonp' or 'http'.                                                         |
+| taList               | any[]                      | optional                   | provide a static list of items to display. This prevents any remote request and has first precedence.      |
+| taDebounce           | number                     | optional                   | ste the debounce time before a request is called                                                           |
 
 ### Outputs
 
-* **taSelected**<_string_> - (**required**) - emits an event once the item is selected.
+| Output     | Type   | Required | Description                               |
+| ---------- | ------ | -------- | ----------------------------------------- |
+| taSelected | string | YES      | emits an event once the item is selected. |
 
 ## DEMO
 
