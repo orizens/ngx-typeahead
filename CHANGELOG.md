@@ -1,3 +1,9 @@
+## v 6.0.0 (2018/05/23)
+
+* [UPGRADE] - now follows Angular 6 and rxjs 6
+* [FIXED] - if no results - input value is used as the selected value
+* [NEW] - added **"[taAllowEmpty]"** to allow empty strings to pass
+
 ## v 0.2.1 (2018/04/21)
 
 * [FIX] - active item not updated correctly

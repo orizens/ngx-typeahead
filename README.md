@@ -15,8 +15,9 @@ Supports static list (in array form).
 
 ## Angular Support
 
-For **Angular 4.3** (With the new **HttpClient**)- please use version 0.4  
-For **Angular 2, 4** (Without **HttpClient**)- please use version 0.3
+Now, ngx-typeahead now follows Angular versions, starting with **ngx-typeahead@6.0.0** for Angular 6.X.X.  
+For **Angular 4.3/5.X** (With the new **HttpClient**)- please use version > 0.2.1  
+For **Angular 2, 4** (Without **HttpClient**)- please use version 0.0.3
 
 AOT compatible
 
@@ -50,7 +51,8 @@ npm install ngx-typeahead --save-dev
 | taApi                | string                     | optional, default: 'jsonp' | the utility to make a request with - 'jsonp', 'http'.                                                      |
 | taApiMethod          | string                     | optional, default: 'get'   | the method to be used in either 'jsonp' or 'http'.                                                         |
 | taList               | any[]                      | optional                   | provide a static list of items to display. This prevents any remote request and has first precedence.      |
-| taDebounce           | number                     | optional                   | ste the debounce time before a request is called                                                           |
+| taDebounce           | number                     | optional                   | set the debounce time before a request is called                                                           |
+| taAllowEmpty         | boolean                    | optional, default: false   | if true, it allows empty strings to pass and invoke search                                                 |
 
 ### Outputs
 
@@ -60,18 +62,18 @@ npm install ngx-typeahead --save-dev
 
 ## DEMO
 
-[Demo with all parameters](http://plnkr.co/edit/gV6kMSRlogjBKnh3JHU3?p=preview)
+[Demo with all parameters StackBlitz](https://stackblitz.com/edit/ngx-typeahead?file=src/main.ts)
 
 ## Usage
 
 First, import the **NgxTypeaheadModule** to your module:
 
 ```typescript
-import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { NgxTypeaheadModule } from "ngx-typeahead";
-import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
-import { AppComponent } from "./app";
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgxTypeaheadModule } from 'ngx-typeahead';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppComponent } from './app';
 
 @NgModule({
   imports: [BrowserModule, NgxTypeaheadModule],
@@ -86,10 +88,10 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 Then, in app component:
 
 ```typescript
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "app",
+  selector: 'app',
   template: `
     <div class="search-results">
       <input [value]="search"
@@ -102,15 +104,15 @@ import { Component } from "@angular/core";
   `
 })
 export class AppComponent {
-  public url = "http://suggestqueries.google.com/complete/search";
+  public url = 'http://suggestqueries.google.com/complete/search';
   public params = {
-    hl: "en",
-    ds: "yt",
-    xhr: "t",
-    client: "youtube",
+    hl: 'en',
+    ds: 'yt',
+    xhr: 't',
+    client: 'youtube',
     q: query
   };
-  public search = "";
+  public search = '';
 
   handleResultSelected(result) {
     this.search = result;
@@ -121,10 +123,10 @@ export class AppComponent {
 ## Custom Template For Item
 
 ```typescript
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "app",
+  selector: 'app',
   template: `
     <div class="search-results">
       <input [value]="search"
@@ -141,15 +143,15 @@ import { Component } from "@angular/core";
   `
 })
 export class AppComponent {
-  public url = "http://suggestqueries.google.com/complete/search";
+  public url = 'http://suggestqueries.google.com/complete/search';
   public params = {
-    hl: "en",
-    ds: "yt",
-    xhr: "t",
-    client: "youtube",
+    hl: 'en',
+    ds: 'yt',
+    xhr: 't',
+    client: 'youtube',
     q: query
   };
-  public search = "";
+  public search = '';
 
   handleResultSelected(result) {
     this.search = result;

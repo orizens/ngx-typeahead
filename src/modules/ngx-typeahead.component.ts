@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectorRef,
   Component,
@@ -12,11 +12,8 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef
-} from "@angular/core";
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
-import { Subscription } from "rxjs/Subscription";
-import { of } from "rxjs/observable/of";
+} from '@angular/core';
+import { of, Observable, Subject, Subscription } from 'rxjs';
 import {
   concat,
   debounceTime,
@@ -24,9 +21,10 @@ import {
   filter,
   map,
   switchMap,
-  takeUntil
-} from "rxjs/operators";
-import { Key } from "../models";
+  takeUntil,
+  tap
+} from 'rxjs/operators';
+import { Key } from '../models';
 import {
   createParamsForQuery,
   hasCharacters,
@@ -40,7 +38,7 @@ import {
   toJsonpSingleResult,
   validateArrowKeys,
   validateNonCharKeyCode
-} from "../services/ngx-typeahead.utils";
+} from '../services/ngx-typeahead.utils';
 
 /*
  using an external template:
@@ -51,7 +49,7 @@ import {
   </ng-template>
 */
 @Component({
-  selector: "[ngxTypeahead]",
+  selector: '[ngxTypeahead]',
   styles: [
     `
   .ta-results {
@@ -92,25 +90,27 @@ import {
 })
 export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   showSuggestions = false;
-  results: string[];
+  results: string[] = [];
 
-  @Input() taItemTpl: TemplateRef<any>;
-  @Input() taUrl = "";
+  @Input() taItemTpl!: TemplateRef<any>;
+  @Input() taUrl = '';
   @Input() taParams = {};
-  @Input() taQueryParam = "q";
+  @Input() taQueryParam = 'q';
   @Input() taCallbackParamValue;
-  @Input() taApi = "jsonp";
-  @Input() taApiMethod = "get";
+  @Input() taApi = 'jsonp';
+  @Input() taApiMethod = 'get';
   @Input() taList = [];
   @Input() taDebounce = 300;
+  @Input() taAllowEmpty = false;
 
   @Output() taSelected = new EventEmitter<string>();
 
-  @ViewChild("suggestionsTplRef") suggestionsTplRef: TemplateRef<any>;
+  @ViewChild('suggestionsTplRef') suggestionsTplRef!: TemplateRef<any>;
 
   private suggestionIndex = 0;
-  private subscriptions: Subscription[];
-  private activeResult: string;
+  private subscriptions: Subscription[] = [];
+  private activeResult = '';
+  private searchQuery = '';
   private keydown$ = new Subject<KeyboardEvent>();
   private keyup$ = new Subject<KeyboardEvent>();
 
@@ -121,7 +121,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef
   ) {}
 
-  @HostListener("keydown", ["$event"])
+  @HostListener('keydown', ['$event'])
   handleEsc(event: KeyboardEvent) {
     if (isEscapeKey(event)) {
       this.hideSuggestions();
@@ -130,7 +130,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     this.keydown$.next(event);
   }
 
-  @HostListener("keyup", ["$event"])
+  @HostListener('keyup', ['$event'])
   onkeyup(event: KeyboardEvent) {
     event.preventDefault();
     event.stopPropagation();
@@ -155,33 +155,39 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   }
 
   listenAndSuggest(obs: Subject<KeyboardEvent>) {
-    return obs
+    obs
       .pipe(
         filter((e: KeyboardEvent) => validateNonCharKeyCode(e.keyCode)),
         map(toFormControlValue),
         debounceTime(this.taDebounce),
         concat(),
         distinctUntilChanged(),
-        filter(hasCharacters),
+        filter((query: string) => this.taAllowEmpty || hasCharacters(query)),
+        tap((query: string) => (this.searchQuery = query)),
         switchMap((query: string) => this.suggest(query))
       )
-      .subscribe((results: string[]) => {
-        this.results = results;
-        this.suggestionIndex = -1;
+      .subscribe((results: string[] | any) => {
+        this.assignResults(results);
         this.displaySuggestions(Key.ArrowDown);
       });
   }
 
+  assignResults(results: string[]) {
+    this.results = results;
+    this.suggestionIndex = -1;
+    if (!results || !results.length) {
+      this.activeResult = this.searchQuery;
+    }
+  }
+
   filterEnterEvent(elementObs: Subject<KeyboardEvent>) {
-    return elementObs
-      .pipe(filter(isEnterKey))
-      .subscribe((event: KeyboardEvent) => {
-        this.handleSelectSuggestion(this.activeResult);
-      });
+    elementObs.pipe(filter(isEnterKey)).subscribe((event: KeyboardEvent) => {
+      this.handleSelectSuggestion(this.activeResult);
+    });
   }
 
   navigateWithArrows(elementObs: Subject<KeyboardEvent>) {
-    return elementObs
+    elementObs
       .pipe(
         filter((e: any) => validateArrowKeys(e.keyCode)),
         map((e: any) => e.keyCode)
@@ -219,7 +225,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     const options = {
       params: searchConfig
     };
-    const isJsonpApi = this.taApi === "jsonp";
+    const isJsonpApi = this.taApi === 'jsonp';
     return isJsonpApi
       ? this.requestJsonp(url, options, this.taCallbackParamValue)
       : this.requestHttp(url, options);
@@ -230,7 +236,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     return this.http[apiMethod](url, options);
   }
 
-  requestJsonp(url, options, callback = "callback") {
+  requestJsonp(url, options, callback = 'callback') {
     const params = options.params.toString();
     return this.http
       .jsonp(`${url}?${params}`, callback)

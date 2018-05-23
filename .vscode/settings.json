@@ -10,5 +10,7 @@
     "**/bower_components": true,
     "**/example": true
   },
-  "tslint.exclude": "example/**/*"
+  "tslint.exclude": "example/**/*",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "prettier.singleQuote": true
 }

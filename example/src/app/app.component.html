@@ -9,6 +9,14 @@
     </div>
   </section>
 
+  <section class="col-sm">
+    <h3 class="alert alert-primary">Default (allow empty query)</h3>
+    <div class="search-results">
+      <input class="form-control" [value]="queryEmpty" ngxTypeahead [taUrl]="url" [taParams]="params" [taAllowEmpty]="allowEmpty"
+        (taSelected)="handleJsonpResultWithEmpty($event)">
+    </div>
+  </section>
+
   <section class="col-sm custom">
     <h3 class="alert alert-primary">Using HTTP</h3>
     <div class="search-results style-3">

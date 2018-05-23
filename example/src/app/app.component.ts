@@ -1,38 +1,40 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = "app";
+  title = 'app';
   result$;
-  search = "oren";
-  url = "//suggestqueries.google.com/complete/search";
+  search = 'oren';
+  url = '//suggestqueries.google.com/complete/search';
   params = {
-    hl: "en",
-    ds: "yt",
-    xhr: "t",
-    client: "youtube"
+    hl: 'en',
+    ds: 'yt',
+    xhr: 't',
+    client: 'youtube'
   };
 
-  public query2 = "";
-  public url2 = "mocks/data.json";
+  public queryEmpty = '';
+  public allowEmpty = true;
+  public query2 = '';
+  public url2 = 'mocks/data.json';
 
-  public query3 = "";
+  public query3 = '';
   public staticList = [
-    "guitar",
-    "drums",
-    "bass",
-    "electric guitars",
-    "keyboards",
-    "mic",
-    "bass guitars",
-    "trumpet",
-    "horns",
-    "guitar workshops",
-    "pedals"
+    'guitar',
+    'drums',
+    'bass',
+    'electric guitars',
+    'keyboards',
+    'mic',
+    'bass guitars',
+    'trumpet',
+    'horns',
+    'guitar workshops',
+    'pedals'
   ];
 
   constructor() {
@@ -46,6 +48,10 @@ export class AppComponent {
    */
   public handleJsonpResult(result) {
     this.search = result;
+  }
+
+  public handleJsonpResultWithEmpty(result) {
+    this.queryEmpty = result;
   }
 
   public handleHttpResult(result) {

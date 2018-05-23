@@ -1,5 +1,5 @@
-import { HttpParams } from "@angular/common/http";
-import { Key } from "../models";
+import { HttpParams } from '@angular/common/http';
+import { Key } from '../models';
 
 export function validateNonCharKeyCode(keyCode: number) {
   return [
@@ -34,7 +34,7 @@ export function isEscapeKey(event: KeyboardEvent) {
 
 export function createParamsForQuery(
   query: string,
-  queryParamKey = "q",
+  queryParamKey = 'q',
   customParams = {}
 ) {
   const searchParams = {
@@ -48,16 +48,16 @@ export function createParamsForQuery(
   return params;
 }
 
-export function resolveApiMethod(method = "") {
+export function resolveApiMethod(method = '') {
   const isMethodValid = [
-    "get",
-    "post",
-    "put",
-    "delete",
-    "patch",
-    "request"
+    'get',
+    'post',
+    'put',
+    'delete',
+    'patch',
+    'request'
   ].some(methodName => method === methodName);
-  const apiMethod = isMethodValid ? method : "get";
+  const apiMethod = isMethodValid ? method : 'get';
   return apiMethod;
 }
 
@@ -80,7 +80,7 @@ export function resolveNextIndex(
   return resultIndex;
 }
 
-export function toJsonpSingleResult(response: Response) {
+export function toJsonpSingleResult(response: any) {
   return response[1];
 }
 
