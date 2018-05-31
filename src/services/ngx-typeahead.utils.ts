@@ -95,3 +95,17 @@ export function hasCharacters(query: string) {
 export function toFormControlValue(e: any) {
   return e.target.value;
 }
+
+export function resolveItemValue(
+  item: string | any,
+  fieldsToExtract: string[]
+) {
+  let newItem = item;
+  if (!item.hasOwnProperty('length')) {
+    const fields = !fieldsToExtract.length
+      ? Object.keys(item)
+      : fieldsToExtract;
+    newItem = fields.reduce((acc, cur) => `${acc}${item[cur]}`, '');
+  }
+  return newItem.toLowerCase();
+}

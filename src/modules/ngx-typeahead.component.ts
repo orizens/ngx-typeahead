@@ -37,7 +37,8 @@ import {
   toJsonpFinalResults,
   toJsonpSingleResult,
   validateArrowKeys,
-  validateNonCharKeyCode
+  validateNonCharKeyCode,
+  resolveItemValue
 } from '../services/ngx-typeahead.utils';
 
 /*
@@ -100,10 +101,12 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   @Input() taApi = 'jsonp';
   @Input() taApiMethod = 'get';
   @Input() taList = [];
+  @Input() taListItemField = [];
+  @Input() taListItemLabel = '';
   @Input() taDebounce = 300;
   @Input() taAllowEmpty = false;
 
-  @Output() taSelected = new EventEmitter<string>();
+  @Output() taSelected = new EventEmitter<string | any>();
 
   @ViewChild('suggestionsTplRef') suggestionsTplRef!: TemplateRef<any>;
 
@@ -111,6 +114,8 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   private activeResult = '';
   private searchQuery = '';
+  private selectedItem: any = {};
+  private resultsAsItems: any[] = [];
   private keydown$ = new Subject<KeyboardEvent>();
   private keyup$ = new Subject<KeyboardEvent>();
 
@@ -172,8 +177,12 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       });
   }
 
-  assignResults(results: string[]) {
-    this.results = results;
+  assignResults(results: any[]) {
+    const labelForDisplay = this.taListItemLabel;
+    this.resultsAsItems = results;
+    this.results = results.map(
+      (item: string | any) => (labelForDisplay ? item[labelForDisplay] : item)
+    );
     this.suggestionIndex = -1;
     if (!results || !results.length) {
       this.activeResult = this.searchQuery;
@@ -253,7 +262,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
 
   handleSelectSuggestion(suggestion: string) {
     this.hideSuggestions();
-    this.taSelected.emit(suggestion);
+    this.taSelected.emit(this.resultsAsItems[this.suggestionIndex]);
   }
 
   hideSuggestions() {
@@ -265,6 +274,12 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   }
 
   createListSource(list: any[], query: string): Observable<string[]> {
-    return of(list.filter((item: string) => item.includes(query)));
+    const sanitizedQuery = query.toLowerCase();
+    const fieldsToExtract = this.taListItemField;
+    return of(
+      list.filter((item: string | any) => {
+        return resolveItemValue(item, fieldsToExtract).includes(sanitizedQuery);
+      })
+    );
   }
 }

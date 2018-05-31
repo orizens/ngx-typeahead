@@ -134,4 +134,35 @@ describe('TypeAhead Utils', () => {
     const actual = typeaheadUtils.toFormControlValue(event);
     expect(actual).toBe(event.target.value);
   });
+
+  describe('resolveItemValue()', () => {
+    it('should return item string as lowercase', () => {
+      const item = 'Demo';
+      const actual = typeaheadUtils.resolveItemValue(item, []);
+      expect(actual).toBe(item.toLowerCase());
+    });
+
+    it('should return all item keys as one string', () => {
+      const item = {
+        description: 'Demo',
+        title: 'tItLe'
+      };
+      const actual = typeaheadUtils.resolveItemValue(item, []);
+      expect(actual).toBe(`${item.description}${item.title}`.toLowerCase());
+    });
+
+    it('should return only selected item keys as one string', () => {
+      const item = {
+        description: 'Demo'
+      };
+      const actual = typeaheadUtils.resolveItemValue(item, ['description']);
+      expect(actual).toBe(item.description.toLowerCase());
+    });
+
+    it('should return item string as lowercase even when a field is requested', () => {
+      const item = 'Demo';
+      const actual = typeaheadUtils.resolveItemValue(item, ['something']);
+      expect(actual).toBe(item.toLowerCase());
+    });
+  });
 });

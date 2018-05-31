@@ -41,18 +41,20 @@ npm install ngx-typeahead --save-dev
 
 ### Inputs
 
-| Input                | Type                       | Required                   | Description                                                                                                |
-| -------------------- | -------------------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| taUrl                | string                     | YES                        | the url of a remote server that supports jsonp calls.                                                      |
-| taParams             | { key: string, value: any} | optional, default: {}      | a {key,value} (json) object to include as params for the json call. Each api supports different structure. |
-| taQueryParam         | query                      | optional, default: 'q'     | a string member which is set with the query value for search.                                              |
-| taCallbackParamValue | query                      | optional, NO Default       | a string value for the callback query parameter.                                                           |
-| taItemTpl            | TemplateRef                | - optional                 | a template reference to be used for each result item.                                                      |
-| taApi                | string                     | optional, default: 'jsonp' | the utility to make a request with - 'jsonp', 'http'.                                                      |
-| taApiMethod          | string                     | optional, default: 'get'   | the method to be used in either 'jsonp' or 'http'.                                                         |
-| taList               | any[]                      | optional                   | provide a static list of items to display. This prevents any remote request and has first precedence.      |
-| taDebounce           | number                     | optional                   | set the debounce time before a request is called                                                           |
-| taAllowEmpty         | boolean                    | optional, default: false   | if true, it allows empty strings to pass and invoke search                                                 |
+| Input                | Type                       | Required                   | Description                                                                                                                                                            |
+| -------------------- | -------------------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| taUrl                | string                     | YES                        | the url of a remote server that supports jsonp calls.                                                                                                                  |
+| taParams             | { key: string, value: any} | optional, default: {}      | a {key,value} (json) object to include as params for the json call. Each api supports different structure.                                                             |
+| taQueryParam         | query                      | optional, default: 'q'     | a string member which is set with the query value for search.                                                                                                          |
+| taCallbackParamValue | query                      | optional, NO Default       | a string value for the callback query parameter.                                                                                                                       |
+| taItemTpl            | TemplateRef                | - optional                 | a template reference to be used for each result item.                                                                                                                  |
+| taApi                | string                     | optional, default: 'jsonp' | the utility to make a request with - 'jsonp', 'http'.                                                                                                                  |
+| taApiMethod          | string                     | optional, default: 'get'   | the method to be used in either 'jsonp' or 'http'.                                                                                                                     |
+| taList               | any[]                      | optional                   | provide a static list of items to display. This prevents any remote request and has first precedence.                                                                  |
+| taListItemField      | string[]                   | optional                   | if item in static list is an object, this list of keys in the object that are checked when the list is filtered with the query. if list is empty, all keys are checked |
+| taListItemLabel      | string                     | optional                   | if static list of type object - this label is used as the key for displaying the item in the suggestions list - item[label]                                            |
+| taDebounce           | number                     | optional                   | set the debounce time before a request is called                                                                                                                       |
+| taAllowEmpty         | boolean                    | optional, default: false   | if true, it allows empty strings to pass and invoke search                                                                                                             |
 
 ### Outputs
 

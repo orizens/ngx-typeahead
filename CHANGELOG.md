@@ -1,3 +1,10 @@
+## v 6.0.1 (2018/05/23)
+
+* [FIXED] - static list should be filtered regardless of letters case
+* [NEW] - allow static list items to be of type object
+* [NEW] - added "@Input() taListItemField" - allows to select fields to filter by for items in a static list
+* [NEW] - added "@Input() taListItemLabel" - allows to select a key from objec to be displayed when using static list (of objects)
+
 ## v 6.0.0 (2018/05/23)
 
 * [UPGRADE] - now follows Angular 6 and rxjs 6

@@ -23,6 +23,7 @@ export class AppComponent {
   public url2 = 'mocks/data.json';
 
   public query3 = '';
+  public query4 = '';
   public staticList = [
     'guitar',
     'drums',
@@ -35,6 +36,20 @@ export class AppComponent {
     'horns',
     'guitar workshops',
     'pedals'
+  ];
+
+  public staticListItems = [
+    { label: 'guitar', value: 'guitar-222' },
+    { label: 'drums', value: 'drums-222' },
+    { label: 'bass', value: 'bass-222' },
+    { label: 'electric guitars', value: 'electric-222' },
+    { label: 'keyboards', value: 'keyboards-222' },
+    { label: 'mic', value: 'mic-222' },
+    { label: 'bass guitars', value: 'bass-222' },
+    { label: 'trumpet', value: 'trumpet-222' },
+    { label: 'horns', value: 'horns-222' },
+    { label: 'guitar workshops', value: 'guitar-222' },
+    { label: 'pedals', value: 'pedals-222' }
   ];
 
   constructor() {
@@ -62,5 +77,10 @@ export class AppComponent {
   public handleStaticResultSelected(result) {
     console.log(result);
     this.query3 = result;
+  }
+
+  public handleStaticItemsResultSelected(result) {
+    console.log(result);
+    this.query4 = result;
   }
 }
