@@ -151,6 +151,15 @@ describe('TypeAhead Utils', () => {
       expect(actual).toBe(`${item.description}${item.title}`.toLowerCase());
     });
 
+    it('should return all item keys as one string without case-sensitive', () => {
+      const item = {
+        description: 'Demo',
+        title: 'tItLe'
+      };
+      const actual = typeaheadUtils.resolveItemValue(item, [], true);
+      expect(actual).toBe(`${item.description}${item.title}`);
+    });
+
     it('should return only selected item keys as one string', () => {
       const item = {
         description: 'Demo'

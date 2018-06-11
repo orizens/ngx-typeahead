@@ -53,23 +53,23 @@ import {
   selector: '[ngxTypeahead]',
   styles: [
     `
-  .ta-results {
-    position: absolute;
-  }
-  .ta-backdrop {
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 1;
-  }
-  .ta-item {
-    position: relative;
-    z-index: 2;
-    display: block;
-  }
-  `
+      .ta-results {
+        position: absolute;
+      }
+      .ta-backdrop {
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 1;
+      }
+      .ta-item {
+        position: relative;
+        z-index: 2;
+        display: block;
+      }
+    `
   ],
   template: `
   <ng-template #suggestionsTplRef>
@@ -105,6 +105,8 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   @Input() taListItemLabel = '';
   @Input() taDebounce = 300;
   @Input() taAllowEmpty = false;
+  @Input() taCaseSensitive = false;
+  @Input() taDisplayOnFocus = false;
 
   @Output() taSelected = new EventEmitter<string | any>();
 
@@ -142,6 +144,13 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     this.keyup$.next(event);
   }
 
+  @HostListener('click')
+  onClick() {
+    if (this.taDisplayOnFocus) {
+      this.displaySuggestions();
+    }
+  }
+
   ngOnInit() {
     this.filterEnterEvent(this.keydown$);
     this.listenAndSuggest(this.keyup$);
@@ -173,7 +182,8 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       )
       .subscribe((results: string[] | any) => {
         this.assignResults(results);
-        this.displaySuggestions(Key.ArrowDown);
+        this.updateIndex(Key.ArrowDown);
+        this.displaySuggestions();
       });
   }
 
@@ -201,15 +211,21 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
         filter((e: any) => validateArrowKeys(e.keyCode)),
         map((e: any) => e.keyCode)
       )
-      .subscribe((keyCode: number) => this.displaySuggestions(keyCode));
+      .subscribe((keyCode: number) => {
+        this.updateIndex(keyCode);
+        this.displaySuggestions();
+      });
   }
 
-  displaySuggestions(keyCode: number) {
+  updateIndex(keyCode: number) {
     this.suggestionIndex = resolveNextIndex(
       this.suggestionIndex,
       keyCode === Key.ArrowDown,
       this.results.length
     );
+  }
+
+  displaySuggestions() {
     this.showSuggestions = true;
     this.cdr.markForCheck();
   }
@@ -247,9 +263,10 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
 
   requestJsonp(url, options, callback = 'callback') {
     const params = options.params.toString();
-    return this.http
-      .jsonp(`${url}?${params}`, callback)
-      .pipe(map(toJsonpSingleResult), map(toJsonpFinalResults));
+    return this.http.jsonp(`${url}?${params}`, callback).pipe(
+      map(toJsonpSingleResult),
+      map(toJsonpFinalResults)
+    );
   }
 
   markIsActive(index: number, result: string) {
@@ -261,8 +278,11 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   }
 
   handleSelectSuggestion(suggestion: string) {
+    const result = this.resultsAsItems.length
+      ? this.resultsAsItems[this.suggestionIndex]
+      : suggestion;
     this.hideSuggestions();
-    this.taSelected.emit(this.resultsAsItems[this.suggestionIndex]);
+    this.taSelected.emit(result);
   }
 
   hideSuggestions() {
@@ -274,11 +294,15 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   }
 
   createListSource(list: any[], query: string): Observable<string[]> {
-    const sanitizedQuery = query.toLowerCase();
+    const sanitizedQuery = this.taCaseSensitive ? query : query.toLowerCase();
     const fieldsToExtract = this.taListItemField;
     return of(
       list.filter((item: string | any) => {
-        return resolveItemValue(item, fieldsToExtract).includes(sanitizedQuery);
+        return resolveItemValue(
+          item,
+          fieldsToExtract,
+          this.taCaseSensitive
+        ).includes(sanitizedQuery);
       })
     );
   }
