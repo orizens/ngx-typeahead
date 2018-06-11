@@ -26,8 +26,8 @@ AOT compatible
 I'm a Senior Javascript Engineer & A Front End Consultant at [Orizens](http://orizens.com).
 My services include:
 
-* consulting on how to approach code in projects and keep it maintainable.
-* I provide project bootstrapping and development - while afterwards, I integrate it on site and guide the team on it.
+- consulting on how to approach code in projects and keep it maintainable.
+- I provide project bootstrapping and development - while afterwards, I integrate it on site and guide the team on it.
 
 [Contact Me Here](http://orizens.com/contact)
 
@@ -55,6 +55,8 @@ npm install ngx-typeahead --save-dev
 | taListItemLabel      | string                     | optional                   | if static list of type object - this label is used as the key for displaying the item in the suggestions list - item[label]                                            |
 | taDebounce           | number                     | optional                   | set the debounce time before a request is called                                                                                                                       |
 | taAllowEmpty         | boolean                    | optional, default: false   | if true, it allows empty strings to pass and invoke search                                                                                                             |
+| taCaseSensitive      | boolean                    | optional, default: false   | if true, comparing query is performed with case sensitive                                                                                                              |
+| taDisplayOnFocus     | boolean                    | optional, default: false   | if true, will display results (if exist) when input is clicked                                                                                                         |
 
 ### Outputs
 
@@ -163,4 +165,4 @@ export class AppComponent {
 
 # Showcase Examples
 
-* [Echoes Player - Developed with Angular, angular-cli and ngrx](http://orizens.github.io/echoes-player) ([github repo for echoes player](http://github.com/orizens/echoes-player))
+- [Echoes Player - Developed with Angular, angular-cli and ngrx](http://orizens.github.io/echoes-player) ([github repo for echoes player](http://github.com/orizens/echoes-player))

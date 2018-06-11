@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
     "core-js": "^2.4.1",
-    "ngx-typeahead": "file:../ngx-typeahead-6.0.0-3.tgz",
+    "ngx-typeahead": "file:../ngx-typeahead-6.0.2.tgz",
     "rxjs": "^6.2.0",
     "rxjs-compat": "^6.0.0-rc.0",
     "zone.js": "^0.8.26"

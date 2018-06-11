@@ -106,6 +106,17 @@ describe('A Typeahead component', () => {
       const expected = false;
       expect(actual).toBe(expected);
     });
+
+    it('should handle non existent suggestion', () => {
+      const suggestion = 'not-defined-in-list';
+      component.taList = ['aa', 'ab', 'ac'];
+      component.handleSelectSuggestion(suggestion);
+      component.taSelected.subscribe(result => {
+        const actual = result;
+        const expected = suggestion;
+        expect(actual).toBe(expected);
+      });
+    });
   });
 
   describe('Requests', () => {

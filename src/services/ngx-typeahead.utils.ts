@@ -98,7 +98,8 @@ export function toFormControlValue(e: any) {
 
 export function resolveItemValue(
   item: string | any,
-  fieldsToExtract: string[]
+  fieldsToExtract: string[],
+  caseSensitive = false
 ) {
   let newItem = item;
   if (!item.hasOwnProperty('length')) {
@@ -107,5 +108,5 @@ export function resolveItemValue(
       : fieldsToExtract;
     newItem = fields.reduce((acc, cur) => `${acc}${item[cur]}`, '');
   }
-  return newItem.toLowerCase();
+  return caseSensitive ? newItem : newItem.toLowerCase();
 }
