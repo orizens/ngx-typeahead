@@ -286,9 +286,9 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     if(this.taEmptyOnSelect){
       this.element.nativeElement.value = '';
     }
-    const result = this.resultsAsItems.length
-      ? this.resultsAsItems[this.suggestionIndex]
-      : suggestion;
+    const result = suggestion
+    ? suggestion
+    : this.resultsAsItems[this.suggestionIndex];
     this.hideSuggestions();
     this.taSelected.emit(result);
   }
