@@ -1,3 +1,8 @@
+## v 6.0.3 (2018/08/13)
+
+- [NEW] - added "@Input() taArrayKey" to handle if results is an object and associated with a key
+- [NEW] - Added "@Input() taEmptyOnSelect" to empty the field on result selection
+
 ## v 6.0.2 (2018/06/11)
 
 - [UPDATED] - if no results - input value is used as the selected value

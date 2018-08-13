@@ -1,8 +1,7 @@
 {
   "name": "ngx-typeahead",
-  "version": "6.0.2",
-  "description":
-    "A simple but yet powerful typeahead json/http component for Angular",
+  "version": "6.0.3",
+  "description": "A simple but yet powerful typeahead json/http component for Angular",
   "main": "./bundles/ngx-typeahead.umd.js",
   "module": "./esm5/ngx-typeahead.js",
   "es2015": "./esm2015/ngx-typeahead.js",
