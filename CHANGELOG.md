@@ -1,3 +1,7 @@
+## v 6.1.0 (2018/06/11)
+
+- [FIXED] - selection with a mouse selected always the first result
+
 ## v 6.0.2 (2018/06/11)
 
 - [UPDATED] - if no results - input value is used as the selected value
