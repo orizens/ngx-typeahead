@@ -78,7 +78,7 @@ import {
     <button type="button" class="ta-item list-group-item"
       *ngFor="let result of results; let i = index;"
       [class.active]="markIsActive(i, result)"
-      (click)="handleSelectSuggestion(result)">
+      (click)="handleSelectionClick(result, i)">
       <span *ngIf="!taItemTpl"><i class="fa fa-search"></i> {{ result }}</span>
       <ng-template
         [ngTemplateOutlet]="taItemTpl"
@@ -93,24 +93,40 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   showSuggestions = false;
   results: string[] = [];
 
-  @Input() taItemTpl!: TemplateRef<any>;
-  @Input() taUrl = '';
-  @Input() taParams = {};
-  @Input() taQueryParam = 'q';
-  @Input() taCallbackParamValue;
-  @Input() taApi = 'jsonp';
-  @Input() taApiMethod = 'get';
-  @Input() taList = [];
-  @Input() taListItemField = [];
-  @Input() taListItemLabel = '';
-  @Input() taDebounce = 300;
-  @Input() taAllowEmpty = false;
-  @Input() taCaseSensitive = false;
-  @Input() taDisplayOnFocus = false;
+  @Input()
+  taItemTpl!: TemplateRef<any>;
+  @Input()
+  taUrl = '';
+  @Input()
+  taParams = {};
+  @Input()
+  taQueryParam = 'q';
+  @Input()
+  taCallbackParamValue;
+  @Input()
+  taApi = 'jsonp';
+  @Input()
+  taApiMethod = 'get';
+  @Input()
+  taList = [];
+  @Input()
+  taListItemField = [];
+  @Input()
+  taListItemLabel = '';
+  @Input()
+  taDebounce = 300;
+  @Input()
+  taAllowEmpty = false;
+  @Input()
+  taCaseSensitive = false;
+  @Input()
+  taDisplayOnFocus = false;
 
-  @Output() taSelected = new EventEmitter<string | any>();
+  @Output()
+  taSelected = new EventEmitter<string | any>();
 
-  @ViewChild('suggestionsTplRef') suggestionsTplRef!: TemplateRef<any>;
+  @ViewChild('suggestionsTplRef')
+  suggestionsTplRef!: TemplateRef<any>;
 
   private suggestionIndex = 0;
   private subscriptions: Subscription[] = [];
@@ -275,6 +291,11 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       this.activeResult = result;
     }
     return isActive;
+  }
+
+  handleSelectionClick(suggestion: string, index: number) {
+    this.suggestionIndex = index;
+    this.handleSelectSuggestion(suggestion);
   }
 
   handleSelectSuggestion(suggestion: string) {

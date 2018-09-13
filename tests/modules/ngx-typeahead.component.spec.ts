@@ -117,6 +117,18 @@ describe('A Typeahead component', () => {
         expect(actual).toBe(expected);
       });
     });
+
+    it('should select the correct suggestion with a mouse click', () => {
+      const suggestion = 'ab';
+      const suggestionIndex = 1;
+      component.taList = ['aa', 'ab', 'ac'];
+      component.handleSelectionClick(suggestion, suggestionIndex);
+      component.taSelected.subscribe(result => {
+        const actual = result;
+        const expected = suggestion;
+        expect(actual).toBe(expected);
+      });
+    });
   });
 
   describe('Requests', () => {
