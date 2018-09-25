@@ -60,7 +60,7 @@ export function resolveApiMethod(method = '') {
   const apiMethod = isMethodValid ? method : 'get';
   return apiMethod;
 }
-
+export const NO_INDEX = -1;
 export function resolveNextIndex(
   currentIndex: number,
   stepUp: boolean,
@@ -68,7 +68,7 @@ export function resolveNextIndex(
 ) {
   const step = stepUp ? 1 : -1;
   const topLimit = listLength - 1;
-  const bottomLimit = 0;
+  const bottomLimit = NO_INDEX;
   const currentResultIndex = currentIndex + step;
   let resultIndex = currentResultIndex;
   if (currentResultIndex === topLimit + 1) {

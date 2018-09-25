@@ -1,4 +1,3 @@
-import { async, inject } from '@angular/core/testing';
 import * as typeaheadUtils from '../../src/services/ngx-typeahead.utils';
 import { Key } from '../../src/models';
 
@@ -78,15 +77,15 @@ describe('TypeAhead Utils', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should return to 0 when next index is above the top limit', () => {
+    it('should return NO_INDEX, when next index is above the top limit', () => {
       const actual = typeaheadUtils.resolveNextIndex(9, true);
-      const expected = 0;
+      const expected = typeaheadUtils.NO_INDEX;
       expect(actual).toBe(expected);
     });
 
     it('should set to the top limit when current index is in 0', () => {
       const actual = typeaheadUtils.resolveNextIndex(0, false);
-      const expected = 9;
+      const expected = typeaheadUtils.NO_INDEX;
       expect(actual).toBe(expected);
     });
 

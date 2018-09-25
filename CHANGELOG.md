@@ -1,3 +1,6 @@
+## v 6.2.0 (2018/09/24)
+- [UPDATED] - now supporting "cleared" selection when the input query is not in results - this allows the user to select the actual value in the input and no value from the list of suggestions.
+
 ## v 6.1.0 (2018/06/11)
 
 - [FIXED] - selection with a mouse selected always the first result

@@ -38,7 +38,8 @@ import {
   toJsonpSingleResult,
   validateArrowKeys,
   validateNonCharKeyCode,
-  resolveItemValue
+  resolveItemValue,
+  NO_INDEX
 } from '../services/ngx-typeahead.utils';
 
 /*
@@ -142,7 +143,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     private viewContainer: ViewContainerRef,
     private http: HttpClient,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   @HostListener('keydown', ['$event'])
   handleEsc(event: KeyboardEvent) {
@@ -198,7 +199,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       )
       .subscribe((results: string[] | any) => {
         this.assignResults(results);
-        this.updateIndex(Key.ArrowDown);
+        // this.updateIndex(Key.ArrowDown);
         this.displaySuggestions();
       });
   }
@@ -209,7 +210,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     this.results = results.map(
       (item: string | any) => (labelForDisplay ? item[labelForDisplay] : item)
     );
-    this.suggestionIndex = -1;
+    this.suggestionIndex = NO_INDEX;
     if (!results || !results.length) {
       this.activeResult = this.searchQuery;
     }
@@ -303,7 +304,8 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       ? this.resultsAsItems[this.suggestionIndex]
       : suggestion;
     this.hideSuggestions();
-    this.taSelected.emit(result);
+    const resolvedResult = this.suggestionIndex === NO_INDEX ? this.searchQuery : result;
+    this.taSelected.emit(resolvedResult);
   }
 
   hideSuggestions() {
