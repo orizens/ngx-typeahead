@@ -122,6 +122,8 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   taCaseSensitive = false;
   @Input()
   taDisplayOnFocus = false;
+  @Input()
+  taMapper = (items) => items;
 
   @Output()
   taSelected = new EventEmitter<string | any>();
@@ -206,8 +208,9 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
 
   assignResults(results: any[]) {
     const labelForDisplay = this.taListItemLabel;
-    this.resultsAsItems = results;
-    this.results = results.map(
+    const mappedResults = this.taMapper(results);
+    this.resultsAsItems = mappedResults;
+    this.results = mappedResults.map(
       (item: string | any) => (labelForDisplay ? item[labelForDisplay] : item)
     );
     this.suggestionIndex = NO_INDEX;
