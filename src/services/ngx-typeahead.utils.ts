@@ -96,17 +96,13 @@ export function toFormControlValue(e: any) {
   return e.target.value;
 }
 
-export function resolveItemValue(
-  item: string | any,
-  fieldsToExtract: string[],
-  caseSensitive = false
-) {
-  let newItem = item;
+export function resolveItemValue(item: string | any, fieldsToExtract: string[], caseSensitive = false) {
+  let newItem;
   if (!item.hasOwnProperty('length')) {
-    const fields = !fieldsToExtract.length
-      ? Object.keys(item)
-      : fieldsToExtract;
-    newItem = fields.reduce((acc, cur) => `${acc}${item[cur]}`, '');
+    const fields = !fieldsToExtract.length ? Object.keys(item) : fieldsToExtract;
+    newItem = fields.map(key => `${item[key]}`);
+  } else {
+    newItem = [item];
   }
-  return caseSensitive ? newItem : newItem.toLowerCase();
+  return caseSensitive ? newItem : newItem.map( value => value.toLowerCase() );
 }

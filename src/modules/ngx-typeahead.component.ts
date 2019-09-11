@@ -126,7 +126,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   @Output()
   taSelected = new EventEmitter<string | any>();
 
-  @ViewChild('suggestionsTplRef')
+  @ViewChild('suggestionsTplRef', {static: false})
   suggestionsTplRef!: TemplateRef<any>;
 
   private suggestionIndex = 0;
@@ -319,14 +319,20 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   createListSource(list: any[], query: string): Observable<string[]> {
     const sanitizedQuery = this.taCaseSensitive ? query : query.toLowerCase();
     const fieldsToExtract = this.taListItemField;
-    return of(
-      list.filter((item: string | any) => {
-        return resolveItemValue(
-          item,
-          fieldsToExtract,
-          this.taCaseSensitive
-        ).includes(sanitizedQuery);
-      })
-    );
+
+    // Find all items that match at the start of the string
+    const startsWithList = list.filter((item: string | any) => {
+      const itemValues = resolveItemValue(item, fieldsToExtract, this.taCaseSensitive );
+      return itemValues.some(v => v.startsWith(sanitizedQuery));
+    });
+
+    // Find all items that match (but not at the start of the string)
+    const includesList = list.filter((item: string | any) => {
+      const values = resolveItemValue(item, fieldsToExtract, this.taCaseSensitive );
+      return values.some(v => v.includes(sanitizedQuery)) && !values.some(v => v.startsWith(sanitizedQuery));
+    });
+
+    // Return an observable of the items that match, with the ones matching at the start of the string at the top of the list
+    return of(startsWithList.concat(includesList));
   }
 }
