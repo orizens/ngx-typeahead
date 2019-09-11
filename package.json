@@ -1,6 +1,6 @@
 {
   "name": "ngx-typeahead",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "description": "A simple but yet powerful typeahead json/http component for Angular",
   "main": "./bundles/ngx-typeahead.umd.js",
   "module": "./esm5/ngx-typeahead.js",
@@ -19,12 +19,12 @@
   "author": "Oren Farhi (orizens.com)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/orizens/ngx-typeahead.git"
+    "url": "https://github.com/robpoyntz/ngx-typeahead.git"
   },
   "bugs": {
-    "url": "https://github.com/orizens/ngx-typeahead/issues"
+    "url": "https://github.com/robpoyntz/ngx-typeahead/issues"
   },
-  "homepage": "https://github.com/orizens/ngx-typeahead",
+  "homepage": "https://github.com/robpoyntz/ngx-typeahead",
   "keywords": [
     "angular",
     "javascript",
@@ -51,7 +51,7 @@
     "@angular/platform-browser": ">= 6.0.0",
     "@angular/platform-browser-dynamic": ">= 6.0.0",
     "@angular/platform-server": ">= 6.0.0",
-    "@compodoc/compodoc": "1.0.3",
+    "@compodoc/compodoc": "^1.1.10",
     "@types/jasmine": "2.6.2",
     "@types/node": "8.0.47",
     "chalk": "2.3.0",
@@ -68,15 +68,16 @@
     "karma-webpack": "2.0.5",
     "reflect-metadata": "0.1.10",
     "rollup": "0.50.0",
-    "rollup-plugin-license": "0.6.0",
+    "rollup-plugin-license": "^0.12.1",
     "rollup-plugin-node-resolve": "3.0.0",
     "rollup-plugin-sourcemaps": "0.4.2",
     "rxjs": "6.1.0",
     "shelljs": "0.7.8",
     "source-map-loader": "0.2.3",
     "ts-loader": "3.1.1",
+    "tsickle": "^0.37.0",
     "tslint": "5.8.0",
-    "typescript": "2.7.2",
+    "typescript": "3.4.5",
     "uglify-js": "3.1.6",
     "webpack": "3.8.1",
     "zone.js": "0.8.18"
