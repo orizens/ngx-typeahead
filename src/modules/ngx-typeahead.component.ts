@@ -157,7 +157,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   @HostListener('keyup', ['$event'])
   onkeyup(event: KeyboardEvent) {
     event.preventDefault();
-    event.stopPropagation();
+    // event.stopPropagation();
     this.keyup$.next(event);
   }
 
