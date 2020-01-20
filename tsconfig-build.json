@@ -38,7 +38,6 @@
         "annotateForClosureCompiler": true,
         "strictMetadataEmit": true,
         "flatModuleOutFile": "ngx-typeahead.js",
-        "flatModuleId": "ngx-typeahead",
-        "disableTypeScriptVersionCheck": true
+        "flatModuleId": "ngx-typeahead"
     }
 }
