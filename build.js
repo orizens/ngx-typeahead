@@ -1,10 +1,11 @@
 "use strict";
 
 const shell = require('shelljs');
+const cwd = shell.pwd();
 const chalk = require('chalk');
 
 const PACKAGE = `ngx-typeahead`;
-const NPM_DIR = `dist`;
+const NPM_DIR = `${cwd}/dist`;
 const ESM2015_DIR = `${NPM_DIR}/esm2015`;
 const ESM5_DIR = `${NPM_DIR}/esm5`;
 const BUNDLES_DIR = `${NPM_DIR}/bundles`;

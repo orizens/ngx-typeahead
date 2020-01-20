@@ -122,11 +122,13 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   taCaseSensitive = false;
   @Input()
   taDisplayOnFocus = false;
+  @Input()
+  taMinLength = 0;
 
   @Output()
   taSelected = new EventEmitter<string | any>();
 
-  @ViewChild('suggestionsTplRef')
+  @ViewChild('suggestionsTplRef', {static: false})
   suggestionsTplRef!: TemplateRef<any>;
 
   private suggestionIndex = 0;
@@ -190,6 +192,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       .pipe(
         filter((e: KeyboardEvent) => validateNonCharKeyCode(e.keyCode)),
         map(toFormControlValue),
+        filter((query: string) => query.length > this.taMinLength),
         debounceTime(this.taDebounce),
         concat(),
         distinctUntilChanged(),
@@ -254,7 +257,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * peforms a jsonp/http request to search with query and params
+   * performs a jsonp/http request to search with query and params
    * @param query the query to search from the remote source
    */
   request(query: string) {

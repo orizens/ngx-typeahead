@@ -57,6 +57,7 @@ npm install ngx-typeahead --save-dev
 | taAllowEmpty         | boolean                    | optional, default: false   | if true, it allows empty strings to pass and invoke search                                                                                                             |
 | taCaseSensitive      | boolean                    | optional, default: false   | if true, comparing query is performed with case sensitive                                                                                                              |
 | taDisplayOnFocus     | boolean                    | optional, default: false   | if true, will display results (if exist) when input is clicked                                                                                                         |
+| taMinLength          | number                     | optional, default: 0       | set the minimal query length before request is called                                                                                                   |
 
 ### Outputs
 
