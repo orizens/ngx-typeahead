@@ -1,43 +1,30 @@
 {
-    "compilerOptions": {
-        "rootDir": ".",
-        "baseUrl": ".",
-        "paths": {
-            "@angular/*": [
-                "node_modules/@angular/*"
-            ]
-        },
-        "outDir": "dist",
-        "declaration": true,
-        "strict": true,
-        "moduleResolution": "node",
-        "module": "es2015",
-        "target": "es2015",
-        "lib": [
-            "es2015",
-            "dom"
-        ],
-        "skipLibCheck": true,
-        "types": [],
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "sourceMap": true,
-        "inlineSources": true,
-        "noImplicitAny": false
-    },
-    "files": [
-        "public_api.ts",
-        "node_modules/zone.js/dist/zone.js.d.ts"
-    ],
-    "exclude": [
-        "node_modules",
-        "example"
-    ],
-    "angularCompilerOptions": {
-        "skipTemplateCodegen": true,
-        "annotateForClosureCompiler": true,
-        "strictMetadataEmit": true,
-        "flatModuleOutFile": "ngx-typeahead.js",
-        "flatModuleId": "ngx-typeahead"
-    }
+  "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "outDir": "dist",
+    "declaration": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "es2015",
+    "lib": ["es2018", "dom"],
+    "skipLibCheck": true,
+    "types": [],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "noImplicitAny": false
+  },
+  "files": ["public_api.ts"],
+  "exclude": ["node_modules", "example"],
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": true,
+    "flatModuleOutFile": "ngx-typeahead.js",
+    "flatModuleId": "ngx-typeahead",
+    "enableIvy": false
+  }
 }

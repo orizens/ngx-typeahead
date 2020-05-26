@@ -82,7 +82,7 @@ import { AppComponent } from './app';
 @NgModule({
   imports: [BrowserModule, NgxTypeaheadModule],
   declarations: [AppComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
 
@@ -98,14 +98,15 @@ import { Component } from '@angular/core';
   selector: 'app',
   template: `
     <div class="search-results">
-      <input [value]="search"
+      <input
+        [value]="search"
         ngxTypeahead
         [taUrl]="url"
         [taParams]="params"
         (taSelected)="handleResultSelected($event)"
-      >
+      />
     </div>
-  `
+  `,
 })
 export class AppComponent {
   public url = 'http://suggestqueries.google.com/complete/search';
@@ -114,7 +115,7 @@ export class AppComponent {
     ds: 'yt',
     xhr: 't',
     client: 'youtube',
-    q: query
+    q: query,
   };
   public search = '';
 
@@ -133,18 +134,19 @@ import { Component } from '@angular/core';
   selector: 'app',
   template: `
     <div class="search-results">
-      <input [value]="search"
+      <input
+        [value]="search"
         ngxTypeahead
         [taUrl]="url"
         [taParams]="params"
         [taItemTpl]="itemTpl"
         (taSelected)="handleResultSelected($event)"
-      >
+      />
       <ng-template #itemTpl let-result>
         <strong>MY {{ result.result }}</strong>
       </ng-template>
     </div>
-  `
+  `,
 })
 export class AppComponent {
   public url = 'http://suggestqueries.google.com/complete/search';
@@ -153,7 +155,7 @@ export class AppComponent {
     ds: 'yt',
     xhr: 't',
     client: 'youtube',
-    q: query
+    q: query,
   };
   public search = '';
 
@@ -166,3 +168,7 @@ export class AppComponent {
 # Showcase Examples
 
 - [Echoes Player - Developed with Angular, angular-cli and ngrx](http://orizens.github.io/echoes-player) ([github repo for echoes player](http://github.com/orizens/echoes-player))
+
+# Based on Starter
+
+https://github.com/robisim74/angular-library-starter

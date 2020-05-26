@@ -1,27 +1,7 @@
 {
-  "extends": "tslint:recommended",
-  "rulesDirectory": ["node_modules/codelyzer"],
+  "extends": ["tslint-angular"],
   "rules": {
-    "arrow-parens": false,
-    "no-unnecessary-initializer": false,
-    "directive-selector": [false, "attribute", "camelCase"],
-    "component-selector": [false, "element", "kebab-case"],
-    "use-input-property-decorator": true,
-    "use-output-property-decorator": true,
-    "use-host-property-decorator": true,
-    "no-attribute-parameter-decorator": true,
-    "no-input-rename": true,
-    "no-output-rename": true,
-    "no-forward-ref": true,
-    "use-life-cycle-interface": true,
-    "use-pipe-transform-interface": true,
-    "no-unused-expression": true,
-    "component-class-suffix": [true, "Component"],
-    "directive-class-suffix": [true, "Directive"],
-    "object-literal-sort-keys": false,
-    "ordered-imports": [false],
-    "quotemark": [true, "single"],
-    "trailing-comma": [false],
-    "member-access": [false, "check-accessor"]
+    "directive-selector": [false, "attribute", ["dir", "dir"], "camelCase"],
+    "component-selector": [false, "element", ["cmp", "cmp"], "kebab-case"]
   }
 }
