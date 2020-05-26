@@ -1,22 +1,22 @@
 import { HttpParams } from '@angular/common/http';
 import { Key } from '../models';
 
-export function validateNonCharKeyCode(keyCode: number) {
+export function validateNonCharKeyCode(keyCode: string) {
   return [
     Key.Enter,
     Key.Tab,
-    Key.Shift,
+    Key.ShiftLeft,
+    Key.ShiftRight,
     Key.ArrowLeft,
     Key.ArrowUp,
     Key.ArrowRight,
     Key.ArrowDown,
-    Key.MacCommandLeft,
-    Key.MacCommandRight,
-    Key.MacCommandFirefox
-  ].every(codeKey => codeKey !== keyCode);
+    Key.MetaLeft,
+    Key.MetaRight,
+  ].every((codeKey) => codeKey !== keyCode);
 }
 
-export function validateArrowKeys(keyCode: number) {
+export function validateArrowKeys(keyCode: string) {
   return keyCode === Key.ArrowDown || keyCode === Key.ArrowUp;
 }
 
@@ -25,11 +25,12 @@ export function isIndexActive(index: number, currentIndex: number) {
 }
 
 export function isEnterKey(event: KeyboardEvent) {
-  return event.keyCode === Key.Enter;
+  return event.code === Key.Enter;
 }
 
 export function isEscapeKey(event: KeyboardEvent) {
-  return event.keyCode === Key.Escape;
+  // tslint:disable-next-line: deprecation
+  return event.code === Key.Escape;
 }
 
 export function createParamsForQuery(
@@ -39,7 +40,7 @@ export function createParamsForQuery(
 ) {
   const searchParams = {
     [queryParamKey]: query,
-    ...customParams
+    ...customParams,
   };
   // tslint:disable-next-line
   const setParam = (acc: HttpParams, param: string) =>
@@ -55,8 +56,8 @@ export function resolveApiMethod(method = '') {
     'put',
     'delete',
     'patch',
-    'request'
-  ].some(methodName => method === methodName);
+    'request',
+  ].some((methodName) => method === methodName);
   const apiMethod = isMethodValid ? method : 'get';
   return apiMethod;
 }

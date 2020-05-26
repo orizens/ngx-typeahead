@@ -11,7 +11,7 @@ import {
   Output,
   TemplateRef,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef,
 } from '@angular/core';
 import { of, Observable, Subject, Subscription } from 'rxjs';
 import {
@@ -22,7 +22,7 @@ import {
   map,
   switchMap,
   takeUntil,
-  tap
+  tap,
 } from 'rxjs/operators';
 import { Key } from '../models';
 import {
@@ -39,7 +39,7 @@ import {
   validateArrowKeys,
   validateNonCharKeyCode,
   resolveItemValue,
-  NO_INDEX
+  NO_INDEX,
 } from '../services/ngx-typeahead.utils';
 
 /*
@@ -51,7 +51,7 @@ import {
   </ng-template>
 */
 @Component({
-  selector: '[ngxTypeahead]',
+  selector: 'ngx-typeahead, [ngxTypeahead]',
   styles: [
     `
       .ta-results {
@@ -70,25 +70,32 @@ import {
         z-index: 2;
         display: block;
       }
-    `
+    `,
   ],
   template: `
-  <ng-template #suggestionsTplRef>
-  <section class="ta-results list-group" *ngIf="showSuggestions">
-    <div class="ta-backdrop" (click)="hideSuggestions()"></div>
-    <button type="button" class="ta-item list-group-item"
-      *ngFor="let result of results; let i = index;"
-      [class.active]="markIsActive(i, result)"
-      (click)="handleSelectionClick(result, i)">
-      <span *ngIf="!taItemTpl"><i class="fa fa-search"></i> {{ result }}</span>
-      <ng-template
-        [ngTemplateOutlet]="taItemTpl"
-        [ngTemplateOutletContext]="{ $implicit: {result: result, index: i} }"
-      ></ng-template>
-    </button>
-  </section>
-  </ng-template>
-  `
+    <ng-template #suggestionsTplRef>
+      <section class="ta-results list-group" *ngIf="showSuggestions">
+        <div class="ta-backdrop" (click)="hideSuggestions()"></div>
+        <button
+          type="button"
+          class="ta-item list-group-item"
+          *ngFor="let result of results; let i = index"
+          [class.active]="markIsActive(i, result)"
+          (click)="handleSelectionClick(result, i)"
+        >
+          <span *ngIf="!taItemTpl"
+            ><i class="fa fa-search"></i> {{ result }}</span
+          >
+          <ng-template
+            [ngTemplateOutlet]="taItemTpl"
+            [ngTemplateOutletContext]="{
+              $implicit: { result: result, index: i }
+            }"
+          ></ng-template>
+        </button>
+      </section>
+    </ng-template>
+  `,
 })
 export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   showSuggestions = false;
@@ -143,7 +150,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
     private viewContainer: ViewContainerRef,
     private http: HttpClient,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   @HostListener('keydown', ['$event'])
   handleEsc(event: KeyboardEvent) {
@@ -188,9 +195,11 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   listenAndSuggest(obs: Subject<KeyboardEvent>) {
     obs
       .pipe(
-        filter((e: KeyboardEvent) => validateNonCharKeyCode(e.keyCode)),
+        // tslint:disable-next-line: deprecation
+        filter((e: KeyboardEvent) => validateNonCharKeyCode(e.code)),
         map(toFormControlValue),
         debounceTime(this.taDebounce),
+        // tslint:disable-next-line: deprecation
         concat(),
         distinctUntilChanged(),
         filter((query: string) => this.taAllowEmpty || hasCharacters(query)),
@@ -207,8 +216,8 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   assignResults(results: any[]) {
     const labelForDisplay = this.taListItemLabel;
     this.resultsAsItems = results;
-    this.results = results.map(
-      (item: string | any) => (labelForDisplay ? item[labelForDisplay] : item)
+    this.results = results.map((item: string | any) =>
+      labelForDisplay ? item[labelForDisplay] : item
     );
     this.suggestionIndex = NO_INDEX;
     if (!results || !results.length) {
@@ -228,13 +237,13 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
         filter((e: any) => validateArrowKeys(e.keyCode)),
         map((e: any) => e.keyCode)
       )
-      .subscribe((keyCode: number) => {
+      .subscribe((keyCode: string) => {
         this.updateIndex(keyCode);
         this.displaySuggestions();
       });
   }
 
-  updateIndex(keyCode: number) {
+  updateIndex(keyCode: string) {
     this.suggestionIndex = resolveNextIndex(
       this.suggestionIndex,
       keyCode === Key.ArrowDown,
@@ -265,7 +274,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       this.taParams
     );
     const options = {
-      params: searchConfig
+      params: searchConfig,
     };
     const isJsonpApi = this.taApi === 'jsonp';
     return isJsonpApi
@@ -280,10 +289,9 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
 
   requestJsonp(url, options, callback = 'callback') {
     const params = options.params.toString();
-    return this.http.jsonp(`${url}?${params}`, callback).pipe(
-      map(toJsonpSingleResult),
-      map(toJsonpFinalResults)
-    );
+    return this.http
+      .jsonp(`${url}?${params}`, callback)
+      .pipe(map(toJsonpSingleResult), map(toJsonpFinalResults));
   }
 
   markIsActive(index: number, result: string) {
@@ -304,7 +312,8 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
       ? this.resultsAsItems[this.suggestionIndex]
       : suggestion;
     this.hideSuggestions();
-    const resolvedResult = this.suggestionIndex === NO_INDEX ? this.searchQuery : result;
+    const resolvedResult =
+      this.suggestionIndex === NO_INDEX ? this.searchQuery : result;
     this.taSelected.emit(resolvedResult);
   }
 
