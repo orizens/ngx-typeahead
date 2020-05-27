@@ -74,7 +74,7 @@ npm run build
 
 To test locally the npm package:
 ```Shell
-npm run pack-lib
+npm run pack:lib
 ```
 Then you can install it in an app to test it:
 ```Shell

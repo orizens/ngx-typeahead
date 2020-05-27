@@ -44,7 +44,7 @@ if (shell.exec(`node-sass -r ${OUT_DIR} -o ${OUT_DIR}`).code === 0) {
 
 /* AoT compilation */
 shell.echo(`Start AoT compilation`);
-if (shell.exec(`ngc -p ${OUT_DIR}/tsconfig-build.json`).code !== 0) {
+if (shell.exec(`ngc -p ./tsconfig-build.json`).code !== 0) {
   shell.echo(chalk.red(`Error: AoT compilation failed`));
   shell.exit(1);
 }
@@ -71,7 +71,7 @@ if (
 
 shell.echo(`Produce ESM5/FESM5 versions`);
 shell.exec(
-  `ngc -p ${OUT_DIR}/tsconfig-build.json --target es5 -d false --outDir ${OUT_DIR_ESM5_ABS} --sourceMap`
+  `ngc -p ./tsconfig-build.json --target es5 -d false --outDir ${OUT_DIR_ESM5_ABS} --sourceMap`
 );
 shell.cp(
   `-Rf`,
