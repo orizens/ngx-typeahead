@@ -1,0 +1,84 @@
+<nav class="navbar navbar-light bg-light">
+  <span class="navbar-brand mb-0 h1">ngxTypeahead Tester</span>
+</nav>
+<section class="row">
+  <section class="col-sm">
+    <h3 class="alert alert-primary">Default</h3>
+    <div class="search-results">
+      <input
+        class="form-control"
+        [value]="search"
+        ngxTypeahead
+        [taUrl]="url"
+        [taParams]="params"
+        (taSelected)="handleJsonpResult($event)"
+      >
+    </div>
+  </section>
+
+  <section class="col-sm">
+    <h3 class="alert alert-primary">Default (allow empty query)</h3>
+    <div class="search-results">
+      <input
+        class="form-control"
+        [value]="queryEmpty"
+        ngxTypeahead
+        [taUrl]="url"
+        [taParams]="params"
+        [taAllowEmpty]="allowEmpty"
+        (taSelected)="handleJsonpResultWithEmpty($event)"
+      >
+    </div>
+  </section>
+
+  <section class="col-sm custom">
+    <h3 class="alert alert-primary">Using HTTP</h3>
+    <div class="search-results style-3">
+      <input
+        class="form-control"
+        type="text"
+        [value]="query2"
+        ngxTypeahead
+        [taUrl]="url2"
+        [taParams]="{}"
+        [taApi]="'http'"
+        (taSelected)="handleHttpResult($event)"
+      >
+    </div>
+  </section>
+
+  <section class="col-sm">
+    <h3 class="alert alert-primary">Using STATIC list</h3>
+    <div class="search-results style-3">
+      <input
+        class="form-control"
+        type="text"
+        ngxTypeahead
+        [value]="query3"
+        [taList]="staticList"
+        (taSelected)="handleStaticResultSelected($event)"
+      >
+    </div>
+    <h4>the source list:</h4>
+    <pre>      {{ staticList | json }}
+    </pre>
+  </section>
+
+  <section class="col-sm">
+    <h3 class="alert alert-primary">Using STATIC list</h3>
+    <div class="search-results style-3">
+      <input
+        class="form-control"
+        type="text"
+        ngxTypeahead
+        [value]="query4"
+        [taList]="staticListItems"
+        [taListItemLabel]="'value'"
+        (taSelected)="handleStaticItemsResultSelected($event)"
+      >
+    </div>
+    <h4>the source list:</h4>
+    <pre>      {{ staticListItems | json }}
+    </pre>
+  </section>
+</section>

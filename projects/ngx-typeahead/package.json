@@ -1,0 +1,11 @@
+{
+  "name": "ngx-typeahead",
+  "version": "9.0.1-next",
+  "peerDependencies": {
+    "@angular/common": "^9.1.11",
+    "@angular/core": "^9.1.11"
+  },
+  "dependencies": {
+    "tslib": "^1.10.0"
+  }
+}
