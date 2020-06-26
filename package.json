@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:lib": "ng build ngx-typeahead",
+    "publish:lib": "npm run build && npm publish ./dist",
     "publish:lib:next": "npm publish --tag next ./dist/ngx-typeahead",
     "test": "ng test",
     "lint": "ng lint",
