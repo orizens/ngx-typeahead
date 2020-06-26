@@ -1,6 +1,6 @@
 {
   "name": "ngx-typeahead-lib",
-  "version": "9.0.1-next",
+  "version": "9.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

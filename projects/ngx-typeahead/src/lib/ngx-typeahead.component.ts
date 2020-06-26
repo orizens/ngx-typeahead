@@ -134,8 +134,8 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   @Output()
   taSelected = new EventEmitter<string | any>();
 
-  @ViewChild('suggestionsTplRef', {static: true})
-  suggestionsTplRef!: TemplateRef<any>;
+  @ViewChild(TemplateRef, {static: true})
+  suggestionsTplRef: TemplateRef<any>;
 
   private suggestionIndex = 0;
   private subscriptions: Subscription[] = [];
@@ -189,6 +189,10 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   }
 
   renderTemplate() {
+    if (!this.suggestionsTplRef) {
+      console.error('NO NGXTA Template Found. Requires NG9');
+      return;
+    }
     this.viewContainer.createEmbeddedView(this.suggestionsTplRef);
     this.cdr.markForCheck();
   }
