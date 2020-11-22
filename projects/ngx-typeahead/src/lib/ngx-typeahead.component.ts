@@ -21,7 +21,6 @@ import {
   filter,
   map,
   switchMap,
-  takeUntil,
   tap,
 } from 'rxjs/operators';
 import { Key } from './models';
@@ -134,7 +133,7 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   @Output()
   taSelected = new EventEmitter<string | any>();
 
-  @ViewChild(TemplateRef, {static: true})
+  @ViewChild(TemplateRef, { static: true })
   suggestionsTplRef: TemplateRef<any>;
 
   private suggestionIndex = 0;
@@ -239,11 +238,11 @@ export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   navigateWithArrows(elementObs: Subject<KeyboardEvent>) {
     elementObs
       .pipe(
-        filter((e: any) => validateArrowKeys(e.keyCode)),
-        map((e: any) => e.keyCode)
+        map((e: any) => e.key),
+        filter((key: Key) => validateArrowKeys(key))
       )
-      .subscribe((keyCode: string) => {
-        this.updateIndex(keyCode);
+      .subscribe((key: Key) => {
+        this.updateIndex(key);
         this.displaySuggestions();
       });
   }

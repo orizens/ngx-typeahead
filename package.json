@@ -1,6 +1,6 @@
 {
   "name": "ngx-typeahead-lib",
-  "version": "9.1.0",
+  "version": "9.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -12,7 +12,15 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orizens/ngx-typeahead.git"
+  },
+  "bugs": {
+    "url": "https://github.com/orizens/ngx-typeahead/issues"
+  },
+  "homepage": "https://github.com/orizens/ngx-typeahead",
+  "private": false,
   "dependencies": {
     "@angular/animations": "~9.1.9",
     "@angular/common": "~9.1.9",
