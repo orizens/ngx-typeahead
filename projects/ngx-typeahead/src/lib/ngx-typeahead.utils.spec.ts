@@ -14,10 +14,10 @@ describe('TypeAhead Utils', () => {
     expect(actual).toBe(expected);
   });
 
-  it('should tell if index is active', () => {
-    const actual = typeaheadUtils.isIndexActive(3, 4);
-    const expected = false;
-  });
+  // it('should tell if index is active', () => {
+  //   const actual = typeaheadUtils.isIndexActive(3, 4);
+  //   const expected = false;
+  // });
 
   describe('Search Params Creation', () => {
     const query = 'ambient albums';
