@@ -5,6 +5,11 @@
     "@angular/common": "^9.1.11",
     "@angular/core": "^9.1.11"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orizens/ngx-typeahead.git",
+    "directory": "projects/ngx-typeahead"
+  },
   "dependencies": {
     "tslib": "^1.10.0"
   }
