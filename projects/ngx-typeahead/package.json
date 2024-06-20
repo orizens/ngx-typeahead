@@ -11,6 +11,6 @@
     "directory": "projects/ngx-typeahead"
   },
   "dependencies": {
-    "tslib": "^1.10.0"
+    "tslib": "^2.0.0"
   }
 }
