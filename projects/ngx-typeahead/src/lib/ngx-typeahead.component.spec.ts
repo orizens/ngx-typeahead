@@ -24,13 +24,13 @@
 //   });
 // });
 
-import { TestBed, ComponentFixture, inject } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {
   ChangeDetectorRef,
   ElementRef,
   ViewContainerRef,
-  DebugElement,
+  // DebugElement,
 } from '@angular/core';
 import { NgxTypeAheadComponent } from './ngx-typeahead.component';
 import { Key } from './models';

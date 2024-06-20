@@ -1,9 +1,8 @@
-[![Build Status](https://travis-ci.org/orizens/ngx-typeahead.svg?branch=master)](https://travis-ci.org/orizens/ngx-typeahead)
 [![npm version](https://badge.fury.io/js/ngx-typeahead.svg)](https://badge.fury.io/js/ngx-typeahead)
 ![npm](https://img.shields.io/npm/dt/ngx-typeahead.svg)
 ![npm](https://img.shields.io/npm/dm/ngx-typeahead.svg)
 
-# Angular Typeahead Component
+# Angular Typeahead Directive/Component (Standalone)
 
 This is an extract of the typeahead component from the [open source](http://github.com/orizens/echoes-player) [Echoes Player](http://echoesplayer.com).
 
@@ -70,29 +69,20 @@ npm install ngx-typeahead --save-dev
 
 ## Usage
 
-First, import the **NgxTypeaheadModule** to your module:
+App/Component should be loaded as a standalone component:
 
 ```typescript
-import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { NgxTypeaheadModule } from "ngx-typeahead";
-import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
-import { AppComponent } from "./app";
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
 
-@NgModule({
-  imports: [BrowserModule, NgxTypeaheadModule],
-  declarations: [AppComponent],
-  bootstrap: [AppComponent],
-})
-export class AppModule {}
-
-platformBrowserDynamic().bootstrapModule(AppModule);
+bootstrapApplication(AppComponent);
 ```
 
-Then, in app component:
+Then, in your component, add to `imports` array:
 
 ```typescript
 import { Component } from "@angular/core";
+import { NgxTypeAheadComponent } from 'ngx-typeahead';
 
 @Component({
   selector: "app",
@@ -107,17 +97,18 @@ import { Component } from "@angular/core";
       />
     </div>
   `,
+  imports: [NgxTypeAheadComponent]
 })
 export class AppComponent {
-  public url = "http://suggestqueries.google.com/complete/search";
-  public params = {
+  url = "http://suggestqueries.google.com/complete/search";
+  params = {
     hl: "en",
     ds: "yt",
     xhr: "t",
     client: "youtube",
     q: query,
   };
-  public search = "";
+  search = "";
 
   handleResultSelected(result) {
     this.search = result;
@@ -129,6 +120,7 @@ export class AppComponent {
 
 ```typescript
 import { Component } from "@angular/core";
+import { NgxTypeAheadComponent } from 'ngx-typeahead';
 
 @Component({
   selector: "app",
@@ -147,17 +139,18 @@ import { Component } from "@angular/core";
       </ng-template>
     </div>
   `,
+  imports: [NgxTypeAheadComponent]
 })
 export class AppComponent {
-  public url = "http://suggestqueries.google.com/complete/search";
-  public params = {
+  url = "http://suggestqueries.google.com/complete/search";
+  params = {
     hl: "en",
     ds: "yt",
     xhr: "t",
     client: "youtube",
     q: query,
   };
-  public search = "";
+  search = "";
 
   handleResultSelected(result) {
     this.search = result;

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import {
   ChangeDetectorRef,
   Component,
@@ -40,6 +40,7 @@ import {
   resolveItemValue,
   NO_INDEX,
 } from './ngx-typeahead.utils';
+import { CommonModule } from '@angular/common';
 
 /*
  using an external template:
@@ -51,6 +52,7 @@ import {
 */
 @Component({
   // tslint:disable-next-line: component-selector
+  standalone: true,
   selector: 'ngx-typeahead, [ngxTypeahead]',
   styles: [
     `
@@ -96,6 +98,8 @@ import {
       </section>
     </ng-template>
   `,
+  imports: [CommonModule, HttpClientModule, HttpClientJsonpModule],
+
 })
 export class NgxTypeAheadComponent implements OnInit, OnDestroy {
   showSuggestions = false;

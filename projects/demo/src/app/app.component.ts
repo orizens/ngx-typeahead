@@ -1,9 +1,13 @@
+import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { NgxTypeAheadComponent } from 'ngx-typeahead';
 
 @Component({
+  standalone: true,
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  imports: [NgxTypeAheadComponent, JsonPipe],
 })
 export class AppComponent {
   title = 'app';
@@ -17,14 +21,14 @@ export class AppComponent {
     client: 'youtube'
   };
 
-  public queryEmpty = '';
-  public allowEmpty = true;
-  public query2 = '';
-  public url2 = 'mocks/data.json';
+  queryEmpty = '';
+  allowEmpty = true;
+  query2 = '';
+  url2 = 'mocks/data.json';
 
-  public query3 = '';
-  public query4 = '';
-  public staticList = [
+  query3 = '';
+  query4 = '';
+  staticList = [
     'guitar',
     'drums',
     'bass',
@@ -38,7 +42,7 @@ export class AppComponent {
     'pedals'
   ];
 
-  public staticListItems = [
+  staticListItems = [
     { label: 'guitar', value: 'guitar-222' },
     { label: 'drums', value: 'drums-222' },
     { label: 'bass', value: 'bass-222' },
@@ -61,25 +65,25 @@ export class AppComponent {
   /**
    * handleResultSelected
    */
-  public handleJsonpResult(result) {
+  handleJsonpResult(result) {
     this.search = result;
   }
 
-  public handleJsonpResultWithEmpty(result) {
+  handleJsonpResultWithEmpty(result) {
     this.queryEmpty = result;
   }
 
-  public handleHttpResult(result) {
+  handleHttpResult(result) {
     console.log(result);
     this.query2 = result;
   }
 
-  public handleStaticResultSelected(result) {
+  handleStaticResultSelected(result) {
     console.log(result);
     this.query3 = result;
   }
 
-  public handleStaticItemsResultSelected(result) {
+  handleStaticItemsResultSelected(result) {
     console.log(result);
     this.query4 = result;
   }

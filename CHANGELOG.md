@@ -1,3 +1,7 @@
+## v 17.0.1 (2024/06/20)
+
+- [NEW] - use as a standalone directive/component
+
 ## v 17.0.0 (2024/06/20)
 
 - [NEW] - update to ng17
