@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/orizens/ngx-typeahead.svg?branch=master)](https://travis-ci.org/orizens/ngx-typeahead)
 [![npm version](https://badge.fury.io/js/ngx-typeahead.svg)](https://badge.fury.io/js/ngx-typeahead)
 ![npm](https://img.shields.io/npm/dt/ngx-typeahead.svg)
 ![npm](https://img.shields.io/npm/dm/ngx-typeahead.svg)

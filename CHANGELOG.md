@@ -1,3 +1,7 @@
+## v 16.0.0 (2024/06/20)
+
+- [NEW] - update to ng16
+
 ## v 9.2.0 (2020/11/22)
 
 - [FIX] - fixed accessibility arrows selections
