@@ -74,8 +74,11 @@ App/Component should be loaded as a standalone component:
 ```typescript
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
+import { provideHttpClient, withJsonpSupport } from '@angular/common/http';
 
-bootstrapApplication(AppComponent);
+bootstrapApplication(AppComponent, {
+  providers: [provideHttpClient(withJsonpSupport())],
+});
 ```
 
 Then, in your component, add to `imports` array:
