@@ -1,6 +1,6 @@
 {
   "name": "ngx-typeahead-lib",
-  "version": "10.0.0",
+  "version": "13.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -35,7 +35,7 @@
     "zone.js": "~0.11.8"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~13.3.11",
+    "@angular-devkit/build-angular": "^13.3.11",
     "@angular/cli": "~13.3.11",
     "@angular/compiler-cli": "~13.4.0",
     "@types/jasmine": "~3.5.0",
