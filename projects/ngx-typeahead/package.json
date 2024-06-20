@@ -1,9 +1,9 @@
 {
   "name": "ngx-typeahead",
-  "version": "14.0.0",
+  "version": "15.0.0",
   "peerDependencies": {
-    "@angular/common": "^14.0.0",
-    "@angular/core": "^14.0.0"
+    "@angular/common": "^15.0.0",
+    "@angular/core": "^15.0.0"
   },
   "repository": {
     "type": "git",
@@ -11,6 +11,6 @@
     "directory": "projects/ngx-typeahead"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.6.3"
   }
 }
