@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectorRef,
   Component,
@@ -98,7 +98,7 @@ import { CommonModule } from '@angular/common';
       </section>
     </ng-template>
   `,
-  imports: [CommonModule, HttpClientModule, HttpClientJsonpModule],
+  imports: [CommonModule],
 
 })
 export class NgxTypeAheadComponent implements OnInit, OnDestroy {

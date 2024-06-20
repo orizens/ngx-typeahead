@@ -1,3 +1,8 @@
+## v 18.0.0 (2024/06/20)
+
+- [NEW] - update to ng-18
+- [CHORE] - removing http modules from component providers
+
 ## v 17.0.1 (2024/06/20)
 
 - [NEW] - use as a standalone directive/component

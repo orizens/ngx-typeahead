@@ -25,7 +25,7 @@
 // });
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {
   ChangeDetectorRef,
   ElementRef,
@@ -68,15 +68,16 @@ describe('A Typeahead component', () => {
     spyOn(NgxTypeAheadComponent.prototype, 'renderTemplate');
 
     TestBed.configureTestingModule({
-      declarations: [NgxTypeAheadComponent],
-      imports: [HttpClientModule],
-      providers: [
+    declarations: [NgxTypeAheadComponent],
+    imports: [],
+    providers: [
         { provide: ElementRef, useValue: spyElementRef },
         { provide: ViewContainerRef, useValue: spyViewContainerRef },
         { provide: HttpClient, useValue: spyHttp },
         { provide: ChangeDetectorRef, useValue: spyChangeDetectorRef },
-      ],
-    });
+        provideHttpClient(withInterceptorsFromDi()),
+    ]
+});
 
     fixture = TestBed.createComponent(NgxTypeAheadComponent);
     component = fixture.componentInstance;
